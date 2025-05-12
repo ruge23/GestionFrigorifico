@@ -1,6 +1,7 @@
 import { MaterialIcons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
 import React, { useState } from 'react';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import {
   ActivityIndicator,
   Image,
@@ -14,9 +15,10 @@ import {
   View
 } from 'react-native';
 import { useDispatch } from 'react-redux';
-// import { testFirebaseConnection } from '../testFirebase'; 
+import { useNavigation } from '@react-navigation/native';
+import { RootStackParamList } from '@/types';
 
-// type LoginScreenNavigationProp = NativeStackNavigationProp<RootStackParamList, 'login'>;
+type LoginScreenNavigationProp = NativeStackNavigationProp<RootStackParamList, 'login'>;
 
 const LoginScreen = () => {
   const [username, setUsername] = useState('');
@@ -25,7 +27,7 @@ const LoginScreen = () => {
   const [usernameError, setUsernameError] = useState('');
   const [passwordError, setPasswordError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-//   const navigation = useNavigation<LoginScreenNavigationProp>();
+  const navigation = useNavigation<LoginScreenNavigationProp>();
 
   return (
     <SafeAreaView style={styles.safeArea}>
@@ -40,11 +42,11 @@ const LoginScreen = () => {
           <View style={styles.content}>
             {/* Logo centrado en la parte superior */}
             <View style={styles.logoContainer}>
-              <Image
+              {/* <Image
                 source={require('../assets/images/logo-mecanica-integral.jpeg')}
                 style={styles.logo}
                 resizeMode="contain"
-              />
+              /> */}
             </View>
 
             {/* Contenedor del formulario */}
@@ -100,7 +102,7 @@ const LoginScreen = () => {
                   styles.button,
                   isLoading ? styles.buttonDisabled : null
                 ]}
-                // onPress={handleLogin}
+                onPress={() => navigation.navigate('home')}
                 disabled={isLoading}
                 activeOpacity={0.8}
               >
