@@ -2,12 +2,12 @@ import { useNavigation } from '@react-navigation/native';
 import { LinearGradient } from 'expo-linear-gradient';
 import React from 'react';
 import {
-    SafeAreaView,
-    ScrollView,
-    StyleSheet,
-    Text,
-    TouchableOpacity,
-    View
+  SafeAreaView,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View
 } from 'react-native';
 import { useDispatch } from 'react-redux';
 
@@ -19,9 +19,10 @@ const HomeScreen = () => {
   return (
     <SafeAreaView style={styles.safeArea}>
       <LinearGradient
-        colors={['#000000', '#1a1a1a']}
+        colors={['#1a1a1a', '#FFFFFF']}
         style={styles.container}
       >
+        
         <ScrollView contentContainerStyle={styles.scrollContainer}>
           <Text style={styles.title}>Panel de Navegación</Text>
 
@@ -38,7 +39,23 @@ const HomeScreen = () => {
                 start={{ x: 0, y: 0 }}
                 end={{ x: 1, y: 0 }}
               >
-                <Text style={styles.buttonText}>Presupuesto sin Factura</Text>
+                <Text style={styles.buttonText}>Piezas</Text>
+              </LinearGradient>
+            </TouchableOpacity>
+
+            <TouchableOpacity
+              style={styles.button}
+              onPress={() => {
+             
+              }}
+            >
+              <LinearGradient
+                colors={['#FF4C4C', '#FF0000']}
+                style={styles.gradient}
+                start={{ x: 0, y: 0 }}
+                end={{ x: 1, y: 0 }}
+              >
+                <Text style={styles.buttonText}>Ventas</Text>
               </LinearGradient>
             </TouchableOpacity>
 
@@ -54,7 +71,7 @@ const HomeScreen = () => {
                 start={{ x: 0, y: 0 }}
                 end={{ x: 1, y: 0 }}
               >
-                <Text style={styles.buttonText}>Presupuesto con Factura</Text>
+                <Text style={styles.buttonText}>Balance</Text>
               </LinearGradient>
             </TouchableOpacity>
           </View>
@@ -64,7 +81,10 @@ const HomeScreen = () => {
           <TouchableOpacity
             style={styles.exitButton}
             // onPress={() => navigation.navigate('login')}
+            
           >
+            
+            
             <Text style={styles.exitButtonText}>Salir</Text>
           </TouchableOpacity>
         </ScrollView>

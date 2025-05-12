@@ -1,7 +1,8 @@
+import { RootStackParamList } from '@/types';
 import { MaterialIcons } from '@expo/vector-icons';
-import { LinearGradient } from 'expo-linear-gradient';
-import React, { useState } from 'react';
+import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import React, { useState } from 'react';
 import {
   ActivityIndicator,
   Image,
@@ -14,9 +15,6 @@ import {
   TouchableOpacity,
   View
 } from 'react-native';
-import { useDispatch } from 'react-redux';
-import { useNavigation } from '@react-navigation/native';
-import { RootStackParamList } from '@/types';
 
 type LoginScreenNavigationProp = NativeStackNavigationProp<RootStackParamList, 'login'>;
 
@@ -31,94 +29,89 @@ const LoginScreen = () => {
 
   return (
     <SafeAreaView style={styles.safeArea}>
-      <LinearGradient
-        colors={['#000000', '#1a1a1a']}
+      <KeyboardAvoidingView
+        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
         style={styles.container}
       >
-        <KeyboardAvoidingView
-          behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-          style={styles.keyboardAvoidingView}
-        >
-          <View style={styles.content}>
-            {/* Logo centrado en la parte superior */}
+        <View style={styles.content}>
+          <View style={styles.formContainer}>
+            {/* Logo */}
             <View style={styles.logoContainer}>
-              {/* <Image
-                source={require('../assets/images/logo-mecanica-integral.jpeg')}
+              <Image
+                source={require('../assets/images/LosHelgueraLogo.jpg')}
                 style={styles.logo}
                 resizeMode="contain"
-              /> */}
+              />
             </View>
 
-            {/* Contenedor del formulario */}
-            <View style={styles.formContainer}>
-              <Text style={styles.title}>Mecánica Integral</Text>
-              <Text style={styles.subtitle}>Ingresa tus credenciales</Text>
+            <Text style={styles.title}>Super Carnes Los Helguera</Text>
+            <Text style={styles.subtitle}>Ingresa tus credenciales</Text>
 
-              <View style={styles.inputContainer}>
-                <TextInput
-                  style={[
-                    styles.input,
-                    usernameError ? styles.inputError : null
-                  ]}
-                  placeholder="Usuario"
-                  placeholderTextColor="#888"
-                  value={username}
-                  onChangeText={setUsername}
-                  autoCapitalize="none"
-                />
-                {usernameError && (
-                  <Text style={styles.errorText}>{usernameError}</Text>
-                )}
-              </View>
-
-              <View style={styles.passwordContainer}>
-                <TextInput
-                  style={styles.input}
-                  placeholder="Contraseña"
-                  placeholderTextColor="#888"
-                  secureTextEntry={!showPassword}
-                  value={password}
-                  onChangeText={(text) => {
-                    setPassword(text);
-                    setPasswordError('');
-                  }}
-                />
-                <TouchableOpacity
-                  style={styles.toggleButton}
-                  onPress={() => setShowPassword(!showPassword)}
-                >
-                  <MaterialIcons 
-                    name={showPassword ? 'visibility-off' : 'visibility'} 
-                    size={24} 
-                    color="#888" 
-                  />
-                </TouchableOpacity>
-              </View>
-              {passwordError && (
-                <Text style={styles.errorText}>{passwordError}</Text>
+            {/* Usuario */}
+            <View style={styles.inputContainer}>
+              <TextInput
+                style={[styles.input, usernameError ? styles.inputError : null]}
+                placeholder="Usuario"
+                placeholderTextColor="#666"
+                value={username}
+                onChangeText={setUsername}
+                autoCapitalize="none"
+              />
+              {usernameError && (
+                <Text style={styles.errorText}>{usernameError}</Text>
               )}
-              <TouchableOpacity 
-                style={[
-                  styles.button,
-                  isLoading ? styles.buttonDisabled : null
-                ]}
-                onPress={() => navigation.navigate('home')}
-                disabled={isLoading}
-                activeOpacity={0.8}
+            </View>
+
+            {/* Contraseña */}
+            <View style={styles.passwordContainer}>
+              <TextInput
+                style={styles.input}
+                placeholder="Contraseña"
+                placeholderTextColor="#666"
+                secureTextEntry={!showPassword}
+                value={password}
+                onChangeText={(text) => {
+                  setPassword(text);
+                  setPasswordError('');
+                }}
+              />
+              <TouchableOpacity
+                style={styles.toggleButton}
+                onPress={() => setShowPassword(!showPassword)}
               >
-                {isLoading ? (
-                  <View style={styles.loadingContainer}>
-                    <ActivityIndicator size="small" color="#fff" />
-                    <Text style={styles.loadingText}>Cargando...</Text>
-                  </View>
-                ) : (
-                  <Text style={styles.buttonText}>Ingresar</Text>
-                )}
+                <MaterialIcons
+                  name={showPassword ? 'visibility-off' : 'visibility'}
+                  size={24}
+                  color="#666"
+                />
               </TouchableOpacity>
             </View>
+            {passwordError && (
+              <Text style={styles.errorText}>{passwordError}</Text>
+            )}
+
+            {/* Botón */}
+            <TouchableOpacity
+              style={[
+                styles.button,
+                isLoading ? styles.buttonDisabled : null
+              ]}
+              onPress={() => navigation.navigate('home')}
+              disabled={isLoading}
+              activeOpacity={0.8}
+            >
+              {isLoading ? (
+                <View style={styles.loadingContainer}>
+                  <ActivityIndicator size="small" color="#fff" />
+                  <Text style={styles.loadingText}>Cargando...</Text>
+                </View>
+              ) : (
+                <Text style={styles.buttonText}>Ingresar</Text>
+              )}
+            </TouchableOpacity>
           </View>
-        </KeyboardAvoidingView>
-      </LinearGradient>
+        </View>
+      </KeyboardAvoidingView>
     </SafeAreaView>
   );
 };
@@ -126,106 +119,103 @@ const LoginScreen = () => {
 const styles = StyleSheet.create({
   safeArea: {
     flex: 1,
-    backgroundColor: '#000',
+    backgroundColor: '#fff',
   },
   container: {
     flex: 1,
-  },
-  keyboardAvoidingView: {
-    flex: 1,
+    justifyContent: 'center',
+    paddingHorizontal: 20,
   },
   content: {
-    flex: 1,
-    justifyContent: 'space-between',
-    paddingHorizontal: 20,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  formContainer: {
+    backgroundColor: '#FFFFFF',
+    borderRadius: 20,
+    padding: 25,
+    width: '100%',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.15,
+    shadowRadius: 8,
+    elevation: 6,
   },
   logoContainer: {
     alignItems: 'center',
-    justifyContent: 'center',
-    paddingTop: 40,
-    paddingBottom: 20,
+    marginBottom: 30,
+    
   },
   logo: {
-    width: 250,
-    height: 150,
-    marginBottom: 20,
-  },
-  formContainer: {
-    backgroundColor: '#111',
-    borderRadius: 16,
-    padding: 25,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.3,
-    shadowRadius: 6,
-    elevation: 5,
-    marginBottom: 30,
+    width: 320,
+    height: 350,
   },
   title: {
-    fontSize: 24,
-    fontWeight: '600',
-    color: '#fff',
+    fontSize: 40,
+    fontWeight: 'bold',
+    color: '#000',
     textAlign: 'center',
-    marginBottom: 5,
+    marginBottom: 15,
   },
   subtitle: {
-    color: '#aaa',
     fontSize: 14,
+    color: '#333',
     textAlign: 'center',
-    marginBottom: 30,
+    marginBottom: 20,
   },
   inputContainer: {
     marginBottom: 15,
   },
-  passwordContainer: {
-    position: 'relative',
-    marginBottom: 5,
-  },
   input: {
-    backgroundColor: '#222',
-    color: '#fff',
+    backgroundColor: '#fff',
+    color: '#000',
     borderWidth: 1,
-    borderColor: '#333',
-    borderRadius: 8,
-    padding: 15,
-    fontSize: 16,
+    borderColor: '#ccc',
+    borderRadius: 10,
+    paddingVertical: 12,
+    paddingHorizontal: 15,
+    fontSize: 15,
+    elevation: 1,
   },
   inputError: {
-    borderColor: '#ff4c4c',
+    borderColor: '#b00020',
+  },
+  passwordContainer: {
+    position: 'relative',
+    marginBottom: 10,
+  },
+  toggleButton: {
+    position: 'absolute',
+    right: 10,
+    top: '50%',
+    transform: [{ translateY: -12 }],
+    padding: 6,
   },
   errorText: {
-    color: '#ff4c4c',
+    color: '#b00020',
     fontSize: 12,
     marginTop: 5,
     paddingLeft: 5,
   },
-  toggleButton: {
-    position: 'absolute',
-    right: 12,
-    top: '50%',
-    transform: [{ translateY: -12 }],
-    padding: 8,
-  },
   button: {
-    backgroundColor: '#FF4C4C',
-    borderRadius: 8,
-    padding: 16,
+    backgroundColor: '#000',
+    borderRadius: 10,
+    paddingVertical: 14,
     alignItems: 'center',
-    justifyContent: 'center',
-  },
-  buttonDisabled: {
-    opacity: 0.7,
+    marginTop: 20,
   },
   buttonText: {
     color: '#fff',
     fontSize: 16,
-    fontWeight: '500',
+    fontWeight: '600',
+  },
+  buttonDisabled: {
+    opacity: 0.7,
   },
   loadingContainer: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    gap: 8,
   },
   loadingText: {
     color: '#fff',
@@ -233,5 +223,6 @@ const styles = StyleSheet.create({
     marginLeft: 8,
   },
 });
+
 
 export default LoginScreen;
