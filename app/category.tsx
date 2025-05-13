@@ -1,13 +1,12 @@
 import React from 'react';
 import {
-  Image,
-  KeyboardAvoidingView,
-  Platform,
-  SafeAreaView,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
+    KeyboardAvoidingView,
+    Platform,
+    SafeAreaView,
+    StyleSheet,
+    Text,
+    TouchableOpacity,
+    View,
 } from 'react-native';
 
 const HomeScreen = () => {
@@ -23,28 +22,16 @@ const HomeScreen = () => {
           <View style={styles.grid}>
             {/* Piezas */}
             <TouchableOpacity style={styles.gridItem}>
-              <Image
-                source={{ uri: 'https://www.agrimidia.com.br/wp-content/uploads/2023/12/carnes-e-frangos.jpg' }}
-                style={styles.icon}
-              />
               <Text style={styles.gridText}>Piezas</Text>
             </TouchableOpacity>
 
             {/* Ventas */}
             <TouchableOpacity style={styles.gridItem}>
-              <Image
-                source={{ uri: 'https://www.sistemaimpulsa.com/blog/wp-content/uploads/2019/04/img_20150101_195429-696x451.jpg' }}
-                style={styles.icon}
-              />
               <Text style={styles.gridText}>Ventas</Text>
             </TouchableOpacity>
 
             {/* Balance */}
             <TouchableOpacity style={[styles.gridItem, styles.fullWidth]}>
-              <Image
-                source={{ uri: 'https://i0.wp.com/wp.asociaciones.org/wp-content/uploads/2024/01/balances-300x225.jpg?resize=300%2C225&ssl=1' }}
-                style={styles.icon}
-              />
               <Text style={styles.gridText}>Balance</Text>
             </TouchableOpacity>
           </View>
@@ -92,7 +79,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     flexWrap: 'wrap',
     justifyContent: 'space-between',
-    
   },
   gridItem: {
     width: '48%',
@@ -102,7 +88,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     marginBottom: 15,
-    padding: 10,
   },
   fullWidth: {
     width: '100%',
@@ -111,12 +96,6 @@ const styles = StyleSheet.create({
     fontSize: 20,
     color: '#fff',
     fontWeight: '600',
-    marginTop: 10,
-  },
-  icon: {
-    width: 140,
-    height: 150,
-    resizeMode: 'contain',
   },
   exitButton: {
     marginTop: 138,
