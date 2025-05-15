@@ -43,7 +43,10 @@ const HomeScreen = () => {
         </View>
 
         {/* Fila inferior (50% height) */}
-        <TouchableOpacity style={styles.fullWidthItem}>
+        <TouchableOpacity 
+          style={styles.fullWidthItem}
+          onPress={() => router.push('/profitability')}
+        >
           <Icon name="trending-up" size={50} color="#cc0000" />
           <Text style={styles.gridText}>Rentabilidad</Text>
         </TouchableOpacity>

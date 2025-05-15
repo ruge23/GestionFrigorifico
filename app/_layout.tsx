@@ -51,6 +51,14 @@ export default function Layout() {
             headerShown: false,
           })}
         />
+
+        {/* Rentabilidad */}
+        <Stack.Screen
+          name="profitability"
+          options={({ route }) => ({
+            headerShown: false,
+          })}
+        />
       </Stack>
     </Provider>
   );
