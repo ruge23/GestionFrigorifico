@@ -1,4 +1,5 @@
 import React from 'react';
+import { router } from 'expo-router';
 import {
     KeyboardAvoidingView,
     Platform,
@@ -8,6 +9,7 @@ import {
     TouchableOpacity,
     View,
 } from 'react-native';
+
 
 const HomeScreen = () => {
   return (
@@ -21,7 +23,9 @@ const HomeScreen = () => {
 
           <View style={styles.grid}>
             {/* Piezas */}
-            <TouchableOpacity style={styles.gridItem}>
+            <TouchableOpacity style={styles.gridItem}
+              onPress={() => router.push('/pieceManagement')} 
+            >
               <Text style={styles.gridText}>Piezas</Text>
             </TouchableOpacity>
 

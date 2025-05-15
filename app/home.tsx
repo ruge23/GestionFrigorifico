@@ -1,59 +1,53 @@
 import React from 'react';
 import {
   Image,
-  KeyboardAvoidingView,
-  Platform,
   SafeAreaView,
   StyleSheet,
   Text,
   TouchableOpacity,
   View,
+  StatusBar,
 } from 'react-native';
+import { router } from 'expo-router';
+import Icon from 'react-native-vector-icons/MaterialIcons'; // Importa íconos profesionales
 
 const HomeScreen = () => {
   return (
     <SafeAreaView style={styles.safeArea}>
-      <KeyboardAvoidingView
-        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-        style={styles.container}
-      >
-        <View style={styles.card}>
-          <Text style={styles.title}>Super Carnes Los Helguera</Text>
+      {/* Status Bar + Header */}
+      <StatusBar backgroundColor="#cc0000" barStyle="light-content" />
+      <View style={styles.header}>
+        <TouchableOpacity onPress={() => console.log("Abrir menú")}>
+          <Icon name="menu" size={28} color="#fff" style={styles.menuIcon} />
+        </TouchableOpacity>
+        <Text style={styles.headerTitle}>Super Carnes Los Helguera</Text>
+        <TouchableOpacity onPress={() => console.log("Ir a perfil")}>
+          <Icon name="account-circle" size={28} color="#fff" />
+        </TouchableOpacity>
+      </View>
 
-          <View style={styles.grid}>
-            {/* Piezas */}
-            <TouchableOpacity style={styles.gridItem}>
-              <Image
-                source={{ uri: 'https://www.agrimidia.com.br/wp-content/uploads/2023/12/carnes-e-frangos.jpg' }}
-                style={styles.icon}
-              />
-              <Text style={styles.gridText}>Piezas</Text>
-            </TouchableOpacity>
-
-            {/* Ventas */}
-            <TouchableOpacity style={styles.gridItem}>
-              <Image
-                source={{ uri: 'https://www.sistemaimpulsa.com/blog/wp-content/uploads/2019/04/img_20150101_195429-696x451.jpg' }}
-                style={styles.icon}
-              />
-              <Text style={styles.gridText}>Ventas</Text>
-            </TouchableOpacity>
-
-            {/* Balance */}
-            <TouchableOpacity style={[styles.gridItem, styles.fullWidth]}>
-              <Image
-                source={{ uri: 'https://i0.wp.com/wp.asociaciones.org/wp-content/uploads/2024/01/balances-300x225.jpg?resize=300%2C225&ssl=1' }}
-                style={styles.icon}
-              />
-              <Text style={styles.gridText}>Balance</Text>
-            </TouchableOpacity>
-          </View>
-
-          <TouchableOpacity style={styles.exitButton}>
-            <Text style={styles.exitButtonText}>Salir</Text>
+      <View style={styles.gridContainer}>
+        {/* Fila superior (50% height) */}
+        <View style={styles.topRow}>
+          <TouchableOpacity 
+            style={styles.gridItem}
+            onPress={() => router.push('/category')} 
+          >
+            <Icon name="kitchen" size={50} color="#cc0000" />
+            <Text style={styles.gridText}>Piezas</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.gridItem}>
+            <Icon name="point-of-sale" size={50} color="#cc0000" />
+            <Text style={styles.gridText}>Ventas</Text>
           </TouchableOpacity>
         </View>
-      </KeyboardAvoidingView>
+
+        {/* Fila inferior (50% height) */}
+        <TouchableOpacity style={styles.fullWidthItem}>
+          <Icon name="trending-up" size={50} color="#cc0000" />
+          <Text style={styles.gridText}>Rentabilidad</Text>
+        </TouchableOpacity>
+      </View>
     </SafeAreaView>
   );
 };
@@ -61,78 +55,67 @@ const HomeScreen = () => {
 const styles = StyleSheet.create({
   safeArea: {
     flex: 1,
-    backgroundColor: '#FFFFFF',
+    backgroundColor: '#f5f5f5',
   },
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    paddingHorizontal: 20,
-    alignItems: 'center',
-  },
-  card: {
-    width: '100%',
-    backgroundColor: '#fff',
-    borderRadius: 20,
-    padding: 25,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.2,
-    shadowRadius: 6,
-    elevation: 8,
-    alignItems: 'center',
-  },
-  title: {
-    fontSize: 28,
-    fontWeight: 'bold',
-    color: '#000000',
-    textAlign: 'center',
-    marginBottom: 30,
-  },
-  grid: {
+  header: {
     flexDirection: 'row',
-    flexWrap: 'wrap',
     justifyContent: 'space-between',
-    
-  },
-  gridItem: {
-    width: '48%',
-    height: 200,
-    backgroundColor: '#cc0000',
-    borderRadius: 5,
-    justifyContent: 'center',
     alignItems: 'center',
-    marginBottom: 15,
-    padding: 10,
+    padding: 15,
+    backgroundColor: '#cc0000',
+  },
+  headerTitle: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    color: '#fff',
+    flex: 1,
+    textAlign: 'center', // Título centrado
+    marginHorizontal: 10, // Evita solapamiento
+  },
+  menuIcon: {
+    marginRight: 10,
   },
   fullWidth: {
     width: '100%',
   },
-  gridText: {
-    fontSize: 20,
-    color: '#fff',
-    fontWeight: '600',
-    marginTop: 10,
+  gridContainer: {
+    flex: 1, // Ocupa todo el espacio disponible
   },
-  icon: {
-    width: 140,
-    height: 150,
-    resizeMode: 'contain',
+  topRow: {
+    flex: 0.5, // 50% del height
+    flexDirection: 'row',
   },
-  exitButton: {
-    marginTop: 138,
-    borderWidth: 2,
-    borderColor: '#000',
+  gridItem: {
+    flex: 1, // Cada botón ocupa 50% del ancho
+    backgroundColor: '#fff',
+    justifyContent: 'center',
+    alignItems: 'center',
+    margin: 5, // Mínimo margen para separación visual
     borderRadius: 10,
-    paddingVertical: 14,
-    paddingHorizontal: 24,
-    backgroundColor: '#000000',
-    alignSelf: 'center',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    elevation: 3,
   },
-  exitButtonText: {
-    color: '#FFFFFF',
-    fontSize: 16,
-    fontWeight: 'bold',
-    textAlign: 'center',
+  fullWidthItem: {
+    flex: 0.5, // 50% del height
+    backgroundColor: '#fff',
+    justifyContent: 'center',
+    alignItems: 'center',
+    margin: 5,
+    borderRadius: 10,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    elevation: 3,
+  },
+  gridText: {
+    fontSize: 18,
+    fontWeight: '600',
+    color: '#333',
+    marginTop: 10,
   },
 });
 

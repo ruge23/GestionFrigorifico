@@ -1,23 +1,55 @@
 import { Stack } from 'expo-router';
 import { Provider } from 'react-redux';
 import { store } from '../redux/store';
+import React from 'react';
+
 
 export default function Layout() {
   return (
     <Provider store={store}>
-      <Stack>
+      <Stack
+        screenOptions={{
+          // Opciones globales para todas las pantallas
+          headerShown: false,
+          animation: 'fade',
+          contentStyle: { backgroundColor: '#ffffff' },
+        }}
+      >
+        {/* Pantalla inicial con redirección condicional */}
         <Stack.Screen
-          name="index" // Ruta especial que se ejecuta al abrir la app
-          options={{ headerShown: false }}
-          redirect
+          name="index"
+          options={{
+            animation: 'none', // Sin animación para la pantalla de redirección
+          }}
         />
-        <Stack.Screen 
-          name="login" 
-          options={{ headerShown: false }}
-        />
+
+        {/* Pantalla de Login */}
+        <Stack.Screen name="login" />
+
+        {/* Pantalla principal */}
         <Stack.Screen 
           name="home" 
-          options={{ headerShown: false }}
+          options={{
+            gestureEnabled: false, // Deshabilitar gesto de volver atrás
+          }}
+        />
+
+        {/* Pantalla de categoría con parámetros */}
+        <Stack.Screen 
+          name="category" 
+          options={({ route }) => ({
+            title: 'Categoría',
+            headerShown: false, // Mostrar header solo aquí
+            headerBackTitle: 'Atrás',
+          })}
+        />
+
+        {/* Gestión de piezas */}
+        <Stack.Screen
+          name="pieceManagement"
+          options={({ route }) => ({
+            headerShown: false,
+          })}
         />
       </Stack>
     </Provider>

@@ -1,6 +1,7 @@
 import { RootStackParamList } from '@/types';
 import { MaterialIcons } from '@expo/vector-icons';
-import { useNavigation } from '@react-navigation/native';
+import { router } from 'expo-router';
+// import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import React, { useState } from 'react';
 import {
@@ -25,7 +26,7 @@ const LoginScreen = () => {
   const [usernameError, setUsernameError] = useState('');
   const [passwordError, setPasswordError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-  const navigation = useNavigation<LoginScreenNavigationProp>();
+  // const navigation = useNavigation<LoginScreenNavigationProp>();
 
   return (
     <SafeAreaView style={styles.safeArea}>
@@ -96,7 +97,7 @@ const LoginScreen = () => {
                 styles.button,
                 isLoading ? styles.buttonDisabled : null
               ]}
-              onPress={() => navigation.navigate('home')}
+              onPress={() => router.push('/home')}
               disabled={isLoading}
               activeOpacity={0.8}
             >
