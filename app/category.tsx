@@ -1,50 +1,54 @@
 import React from 'react';
 import { router } from 'expo-router';
 import {
-    KeyboardAvoidingView,
-    Platform,
-    SafeAreaView,
-    StyleSheet,
-    Text,
-    TouchableOpacity,
-    View,
+  SafeAreaView,
+  StatusBar,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
 } from 'react-native';
-
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 
 const HomeScreen = () => {
   return (
     <SafeAreaView style={styles.safeArea}>
-      <KeyboardAvoidingView
-        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-        style={styles.container}
-      >
-        <View style={styles.card}>
-          <Text style={styles.title}>Super Carnes Los Helguera</Text>
-
-          <View style={styles.grid}>
-            {/* Piezas */}
-            <TouchableOpacity style={styles.gridItem}
-              onPress={() => router.push('/pieceManagement')} 
-            >
-              <Text style={styles.gridText}>Piezas</Text>
-            </TouchableOpacity>
-
-            {/* Ventas */}
-            <TouchableOpacity style={styles.gridItem}>
-              <Text style={styles.gridText}>Ventas</Text>
-            </TouchableOpacity>
-
-            {/* Balance */}
-            <TouchableOpacity style={[styles.gridItem, styles.fullWidth]}>
-              <Text style={styles.gridText}>Balance</Text>
-            </TouchableOpacity>
-          </View>
-
-          <TouchableOpacity style={styles.exitButton}>
-            <Text style={styles.exitButtonText}>Salir</Text>
+      <StatusBar backgroundColor="#cc0000" barStyle="light-content" />
+      <View style={styles.header}>
+        <Text style={styles.headerTitle}>Categorias</Text>
+      </View>
+      <View style={styles.gridContainer}>
+        {/* Fila superior (50% height) */}
+        <View style={styles.topRow}>
+          <TouchableOpacity
+            style={styles.gridItem}
+            onPress={() => router.push('/pieceManagement')}
+          >
+            <MaterialCommunityIcons name="cow" size={50} color="#cc0000" />
+            <Text style={styles.gridText}>Carne Vacuna</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.gridItem}>
+            <MaterialCommunityIcons name="pig" size={50} color="#cc0000" />
+            <Text style={styles.gridText}>Carne Porcina</Text>
           </TouchableOpacity>
         </View>
-      </KeyboardAvoidingView>
+
+        {/* Fila inferior (50% height) */}
+        <View style={styles.topRow}>
+          <TouchableOpacity
+            style={styles.gridItem}
+            // onPress={() => router.push('/category')}
+          >
+            <MaterialCommunityIcons name="food-hot-dog" size={50} color="#cc0000" />
+            <Text style={styles.gridText}>Embutidos</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.gridItem}>
+            <MaterialIcons name="local-grocery-store" size={50} color="#cc0000" />
+            <Text style={styles.gridText}>Otros</Text>
+          </TouchableOpacity>
+        </View>
+      </View>
     </SafeAreaView>
   );
 };
@@ -52,70 +56,61 @@ const HomeScreen = () => {
 const styles = StyleSheet.create({
   safeArea: {
     flex: 1,
-    backgroundColor: '#FFFFFF',
+    backgroundColor: '#f5f5f5',
   },
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    paddingHorizontal: 20,
-    alignItems: 'center',
-  },
-  card: {
-    width: '100%',
-    backgroundColor: '#fff',
-    borderRadius: 20,
-    padding: 25,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.2,
-    shadowRadius: 6,
-    elevation: 8,
-    alignItems: 'center',
-  },
-  title: {
-    fontSize: 28,
-    fontWeight: 'bold',
-    color: '#000000',
-    textAlign: 'center',
-    marginBottom: 30,
-  },
-  grid: {
+  header: {
     flexDirection: 'row',
-    flexWrap: 'wrap',
     justifyContent: 'space-between',
+    alignItems: 'center',
+    padding: 15,
+    backgroundColor: '#cc0000',
+  },
+  headerTitle: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    color: '#fff',
+    flex: 1,
+    textAlign: 'center', // Título centrado
+    marginHorizontal: 10, // Evita solapamiento
+  },
+  gridContainer: {
+    flex: 1, // Ocupa todo el espacio disponible
+  },
+  topRow: {
+    flex: 0.5, // 50% del height
+    flexDirection: 'row',
   },
   gridItem: {
-    width: '48%',
-    height: 200,
-    backgroundColor: '#cc0000',
-    borderRadius: 5,
+    flex: 1, // Cada botón ocupa 50% del ancho
+    backgroundColor: '#fff',
     justifyContent: 'center',
     alignItems: 'center',
-    marginBottom: 15,
+    margin: 5, // Mínimo margen para separación visual
+    borderRadius: 10,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    elevation: 3,
   },
-  fullWidth: {
-    width: '100%',
+  fullWidthItem: {
+    flex: 0.5, // 50% del height
+    backgroundColor: '#fff',
+    justifyContent: 'center',
+    alignItems: 'center',
+    margin: 5,
+    borderRadius: 10,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    elevation: 3,
   },
   gridText: {
-    fontSize: 20,
-    color: '#fff',
+    fontSize: 18,
     fontWeight: '600',
-  },
-  exitButton: {
-    marginTop: 138,
-    borderWidth: 2,
-    borderColor: '#000',
-    borderRadius: 10,
-    paddingVertical: 14,
-    paddingHorizontal: 24,
-    backgroundColor: '#000000',
-    alignSelf: 'center',
-  },
-  exitButtonText: {
-    color: '#FFFFFF',
-    fontSize: 16,
-    fontWeight: 'bold',
-    textAlign: 'center',
+    color: '#333',
+    marginTop: 10,
   },
 });
 
