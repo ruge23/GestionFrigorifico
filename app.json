@@ -1,10 +1,10 @@
 {
   "expo": {
-    "name": "gestionFrigorifico",
+    "name": "Super Carnes Los Helguera",
     "slug": "gestionFrigorifico",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/images/icon.png",
+    "icon": "./assets/images/LosHelgueraLogo-icon.png",
     "scheme": "gestionfrigorifico",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
@@ -16,19 +16,20 @@
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "edgeToEdgeEnabled": true
+      "edgeToEdgeEnabled": true,
+      "package": "com.rodrirg.gestionFrigorifico"
     },
     "web": {
       "bundler": "metro",
       "output": "static",
-      "favicon": "./assets/images/favicon.png"
+      "favicon": "./assets/images/LosHelgueraLogo-icon.png"
     },
     "plugins": [
       "expo-router",
       [
         "expo-splash-screen",
         {
-          "image": "./assets/images/splash-icon.png",
+          "image": "./assets/images/LosHelgueraLogo-icon.png",
           "imageWidth": 200,
           "resizeMode": "contain",
           "backgroundColor": "#ffffff"
@@ -37,6 +38,12 @@
     ],
     "experiments": {
       "typedRoutes": true
+    },
+    "extra": {
+      "router": {},
+      "eas": {
+        "projectId": "0a94cce7-5eda-40de-bd3a-96161f9516b6"
+      }
     }
   }
 }

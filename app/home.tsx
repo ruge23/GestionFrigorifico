@@ -36,7 +36,10 @@ const HomeScreen = () => {
             <Icon name="kitchen" size={50} color="#cc0000" />
             <Text style={styles.gridText}>Piezas</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.gridItem}>
+          <TouchableOpacity
+            style={styles.gridItem}
+            onPress={() => router.push('/sales')}
+          >
             <Icon name="point-of-sale" size={50} color="#cc0000" />
             <Text style={styles.gridText}>Ventas</Text>
           </TouchableOpacity>

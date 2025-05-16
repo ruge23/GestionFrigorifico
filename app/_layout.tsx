@@ -59,6 +59,14 @@ export default function Layout() {
             headerShown: false,
           })}
         />
+
+        {/* Ventas */}
+        <Stack.Screen
+          name="sales"
+          options={({ route }) => ({
+            headerShown: false,
+          })}
+        />
       </Stack>
     </Provider>
   );

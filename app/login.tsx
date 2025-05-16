@@ -16,6 +16,8 @@ import {
   TouchableOpacity,
   View
 } from 'react-native';
+import { useDispatch } from 'react-redux';
+import { login, loginFailure } from '@/redux/slices/loginSlice';
 
 type LoginScreenNavigationProp = NativeStackNavigationProp<RootStackParamList, 'login'>;
 
@@ -26,7 +28,40 @@ const LoginScreen = () => {
   const [usernameError, setUsernameError] = useState('');
   const [passwordError, setPasswordError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-  // const navigation = useNavigation<LoginScreenNavigationProp>();
+  const dispatch = useDispatch();
+
+  const handleLogin = () => {
+    setUsernameError('');
+    setPasswordError('');
+    let isValid = true;
+
+    if (!username.trim()) {
+      setUsernameError('Por favor ingresa tu nombre de usuario');
+      isValid = false;
+    }
+    if (!password) {
+      setPasswordError('Por favor ingresa tu contraseña');
+      isValid = false;
+    }
+    if (!isValid) return;
+
+    setIsLoading(true);
+    
+    setTimeout(() => {
+      const normalizedUsername = username.toLowerCase().trim();
+      console.log('Intento de login con:', { normalizedUsername, password }); // Debug
+
+      if ((normalizedUsername === 'francisco' && password === '357987')) {
+        dispatch(login({ username: normalizedUsername }));
+        router.push('/home')
+      } else {
+        dispatch(loginFailure({error: 'Credenciales incorrectas'}));
+        setUsernameError('Credenciales incorrectas');
+        setPasswordError('Credenciales incorrectas');
+      }
+      setIsLoading(false);
+    }, 1500);
+  };
 
   return (
     <SafeAreaView style={styles.safeArea}>
@@ -49,11 +84,27 @@ const LoginScreen = () => {
             <Text style={styles.subtitle}>Ingresa tus credenciales</Text>
 
             {/* Usuario */}
-            <View style={styles.inputContainer}>
+            {/* <View style={styles.inputContainer}>
               <TextInput
                 style={[styles.input, usernameError ? styles.inputError : null]}
                 placeholder="Usuario"
                 placeholderTextColor="#666"
+                value={username}
+                onChangeText={setUsername}
+                autoCapitalize="none"
+              />
+              {usernameError && (
+                <Text style={styles.errorText}>{usernameError}</Text>
+              )}
+            </View> */}
+            <View style={styles.inputContainer}>
+              <TextInput
+                style={[
+                  styles.input,
+                  usernameError ? styles.inputError : null
+                ]}
+                placeholder="Usuario"
+                placeholderTextColor="#888"
                 value={username}
                 onChangeText={setUsername}
                 autoCapitalize="none"
