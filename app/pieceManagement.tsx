@@ -10,9 +10,11 @@ import {
   KeyboardAvoidingView,
   Platform,
   Dimensions,
+  Image
 } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { TabView, SceneMap, TabBar } from 'react-native-tab-view';
+import { cortesDeCarne } from '../constants';
 
 // Definición de tipos
 type Piece = {
@@ -61,9 +63,9 @@ const EditTab = ({
     {/* Encabezados de columnas */}
     <View style={styles.columnHeaders}>
       <Text style={[styles.columnHeader, { flex: 2 }]}>Pieza</Text>
-      <Text style={styles.columnHeader}>P.V.P</Text>
-      <Text style={styles.columnHeader}>Kilos</Text>
-      <Text style={styles.columnHeader}>Precio</Text>
+      <Text style={styles.columnHeader}>Precio (kg)</Text>
+      <Text style={styles.columnHeader}>Cantidad (kg)</Text>
+      <Text style={styles.columnHeader}>Total</Text>
     </View>
 
     {/* Filas de piezas */}
@@ -109,23 +111,29 @@ const EditTab = ({
 );
 
 // Componente para la pestaña de Visualización
-const ViewTab = ({ pieces }: { pieces: Piece[] }) => (
+const ViewTab = ({ pieces }: { pieces: typeof cortesDeCarne }) => (
   <ScrollView style={styles.scrollContainer}>
     <View style={styles.cardsContainer}>
       {pieces.map((piece, index) => (
         <View key={index} style={styles.card}>
-          <Text style={styles.cardTitle}>{piece.name}</Text>
-          <View style={styles.cardRow}>
-            <Text style={styles.cardLabel}>P.V.P:</Text>
-            <Text style={styles.cardValue}>$ {piece.pvp}</Text>
-          </View>
-          <View style={styles.cardRow}>
-            <Text style={styles.cardLabel}>Kilos:</Text>
-            <Text style={styles.cardValue}>{piece.kilos} kg</Text>
-          </View>
-          <View style={styles.cardRow}>
-            <Text style={styles.cardLabel}>Total:</Text>
-            <Text style={[styles.cardValue, styles.cardTotal]}>$ {piece.price}</Text>
+          <View style={styles.cardContent}>
+            {/* Imagen a la izquierda */}
+            <Image 
+              source={{ uri: piece.imagen }} 
+              style={styles.cardImage} 
+              resizeMode="contain"
+            />
+            
+            {/* Contenido del medio (nombre y precio) */}
+            <View style={styles.cardMiddle}>
+              <Text style={styles.cardTitle} numberOfLines={2}>{piece.nombre}</Text>
+              <Text style={styles.cardPrice}>{piece.precio}</Text>
+            </View>
+            
+            {/* Kilos a la derecha */}
+            <View style={styles.cardRight}>
+              <Text style={styles.cardKilos}>{piece.kilos} kg</Text>
+            </View>
           </View>
         </View>
       ))}
@@ -138,8 +146,8 @@ const PieceManagementScreen: React.FC = () => {
   const [totals, setTotals] = useState<Totals>(initialTotals);
   const [index, setIndex] = useState(0);
   const [routes] = useState([
-    { key: 'edit', title: 'Editar' },
-    { key: 'view', title: 'Ver' },
+    { key: 'view', title: 'Ver Piezas' },
+    { key: 'edit', title: 'Editar Piezas' },
   ]);
 
   const addNewPiece = (): void => {
@@ -192,7 +200,7 @@ const PieceManagementScreen: React.FC = () => {
         totals={totals}
       />
     ),
-    view: () => <ViewTab pieces={pieces} />,
+    view: () => <ViewTab pieces={cortesDeCarne} />,
   });
 
   return (
@@ -204,7 +212,7 @@ const PieceManagementScreen: React.FC = () => {
         {/* Header */}
         <View style={styles.header}>
           <Text style={styles.headerTitle}>Gestión de Despieces</Text>
-          {index === 0 && (
+          {index === 1 && (
             <TouchableOpacity onPress={addNewPiece} style={styles.addButton}>
               <Icon name="add" size={24} color="#fff" />
             </TouchableOpacity>
@@ -356,27 +364,44 @@ const styles = StyleSheet.create({
     shadowRadius: 4,
     elevation: 3,
   },
+  cardContent: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  cardImage: {
+    width: 80,
+    height: 80,
+    borderRadius: 5,
+    marginRight: 10,
+  },
+  cardMiddle: {
+    flex: 1,
+    marginRight: 10,
+  },
   cardTitle: {
-    fontSize: 16,
+    fontSize: 14,
     fontWeight: 'bold',
-    marginBottom: 10,
+    marginBottom: 5,
     color: '#cc0000',
   },
-  cardRow: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    marginBottom: 8,
-  },
-  cardLabel: {
-    color: '#555',
-  },
-  cardValue: {
-    fontWeight: '600',
-  },
-  cardTotal: {
+  cardPrice: {
     fontSize: 16,
-    color: '#000',
     fontWeight: 'bold',
+    color: '#000',
+  },
+  originalPrice: {
+    fontSize: 12,
+    color: '#999',
+    textDecorationLine: 'line-through',
+  },
+  cardRight: {
+    alignItems: 'flex-end',
+    justifyContent: 'center',
+  },
+  cardKilos: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    color: '#555',
   },
 });
 
