@@ -14,26 +14,29 @@ export const EditableViewTab = ({ pieces: initialPieces, onPiecesChange }: Edita
 
   // Calcular totales
   const totals = useMemo(() => {
-    let totalKilos = 0;
-    let totalPrice = 0;
+  let totalKilos = 0;
+  let totalPrice = 0;
 
-    pieces.forEach(piece => {
-      const kilos = parseFloat(piece.kilos) || 0;
-      const price = parseFloat(piece.precio.replace('$', '').replace(/\./g, '').replace(',', '.')) || 0;
-      
-      totalKilos += kilos;
-      totalPrice += price;
-    });
+  pieces.forEach(piece => {
+    const kilos = parseFloat(piece.kilos) || 0;
+    // Extraer el valor numérico del precio (eliminar $, puntos y cambiar coma por punto)
+    const pricePerKilo = parseFloat(
+      piece.precio.replace('$', '').replace(/\./g, '').replace(',', '.')
+    ) || 0;
+    
+    totalKilos += kilos;
+    totalPrice += pricePerKilo * kilos; // Multiplicamos precio por kilos
+  });
 
-    return {
-      totalKilos: totalKilos.toFixed(2),
-      totalPrice: totalPrice.toLocaleString('es-AR', {
-        style: 'currency',
-        currency: 'ARS',
-        minimumFractionDigits: 2
-      }).replace('ARS', '').trim()
-    };
-  }, [pieces]);
+  return {
+    totalKilos: totalKilos.toFixed(2),
+    totalPrice: totalPrice.toLocaleString('es-AR', {
+      style: 'currency',
+      currency: 'ARS',
+      minimumFractionDigits: 2
+    }).replace('ARS', '').trim()
+  };
+}, [pieces]);
 
   const handleEdit = (index: number) => {
     setEditingId(index);

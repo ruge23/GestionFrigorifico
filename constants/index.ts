@@ -224,3 +224,22 @@ export const embutidos = [
     marca: "Mir"
   }
 ];
+
+export const otros = [
+  {
+    nombre: "CARBON VEGETAL BOX X 3KG",
+    kilos: "3",
+    precio: "$3.499,00",
+    precioSinImpuestos: "$2.891,74",
+    imagen: "https://hiperlibertad.vtexassets.com/arquivos/ids/168850-800-auto?v=637376070338530000&width=800&height=auto&aspect=true",
+    marca: "Mir"
+  },
+  {
+    nombre: "HUEVO CARNAVE MAPLE X30UNID",
+    kilos: "0.5",
+    precio: "$6.200,00",
+    precioSinImpuestos: "$4.063,35",
+    imagen: "https://hiperlibertad.vtexassets.com/arquivos/ids/167934-800-auto?v=637330156640400000&width=800&height=auto&aspect=true",
+    marca: "Frescos"
+  }
+];

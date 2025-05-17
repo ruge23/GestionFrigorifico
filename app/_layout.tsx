@@ -63,6 +63,12 @@ export default function Layout() {
             headerShown: false,
           })}
         />
+        <Stack.Screen
+          name="pieceManagementOthers"
+          options={({ route }) => ({
+            headerShown: false,
+          })}
+        />
 
         {/* Rentabilidad */}
         <Stack.Screen

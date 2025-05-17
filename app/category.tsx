@@ -46,7 +46,10 @@ const HomeScreen = () => {
             <MaterialCommunityIcons name="food-hot-dog" size={50} color="#cc0000" />
             <Text style={styles.gridText}>Embutidos</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.gridItem}>
+          <TouchableOpacity
+            style={styles.gridItem}
+            onPress={() => router.push('/pieceManagementOthers')}
+          >
             <MaterialIcons name="local-grocery-store" size={50} color="#cc0000" />
             <Text style={styles.gridText}>Otros</Text>
           </TouchableOpacity>
