@@ -1,0 +1,222 @@
+import { useState } from 'react';
+import { View, ScrollView, Text, TextInput, StyleSheet, Image, TouchableOpacity } from 'react-native';
+import { cortesDeCarne } from '@/constants';
+
+export const EditableViewTab = ({ pieces: initialPieces }: { pieces: typeof cortesDeCarne }) => {
+  const [pieces, setPieces] = useState(initialPieces);
+  const [editingId, setEditingId] = useState<number | null>(null);
+  const [editValues, setEditValues] = useState({ precio: '', kilos: '' });
+
+  const handleEdit = (index: number) => {
+    setEditingId(index);
+    setEditValues({
+      precio: pieces[index].precio.replace('$', '').trim(),
+      kilos: pieces[index].kilos
+    });
+  };
+
+  const handleSave = (index: number) => {
+    const updatedPieces = [...pieces];
+    updatedPieces[index] = {
+      ...updatedPieces[index],
+      precio: `$${editValues.precio}`,
+      kilos: editValues.kilos
+    };
+    
+    setPieces(updatedPieces);
+    setEditingId(null);
+  };
+
+  const handleCancel = () => {
+    setEditingId(null);
+  };
+
+  const handleChange = (field: 'precio' | 'kilos', value: string) => {
+    setEditValues(prev => ({
+      ...prev,
+      [field]: value
+    }));
+  };
+
+  return (
+    <ScrollView style={styles.scrollContainer}>
+      <View style={styles.cardsContainer}>
+        {pieces.map((piece:any, index: any) => (
+          <View key={index} style={styles.card}>
+            <View style={styles.cardContent}>
+              {/* Imagen a la izquierda */}
+              <Image 
+                source={{ uri: piece.imagen }} 
+                style={styles.cardImage} 
+                resizeMode="contain"
+              />
+              
+              {/* Contenido del medio (nombre y precio) */}
+              <View style={styles.cardMiddle}>
+                <Text style={styles.cardTitle} numberOfLines={2}>{piece.nombre}</Text>
+                
+                {editingId === index ? (
+                  <TextInput
+                    style={styles.input}
+                    value={editValues.precio}
+                    onChangeText={(text) => handleChange('precio', text)}
+                    keyboardType="numeric"
+                    placeholder="Nuevo precio"
+                  />
+                ) : (
+                  <Text style={styles.cardPrice}>{piece.precio}</Text>
+                )}
+                
+                {piece.precioOriginal && (
+                  <Text style={styles.originalPrice}>{piece.precioOriginal}</Text>
+                )}
+              </View>
+              
+              {/* Kilos a la derecha */}
+              <View style={styles.cardRight}>
+                {editingId === index ? (
+                  <TextInput
+                    style={[styles.input, styles.kilosInput]}
+                    value={editValues.kilos}
+                    onChangeText={(text) => handleChange('kilos', text)}
+                    keyboardType="numeric"
+                    placeholder="Kilos"
+                  />
+                ) : (
+                  <Text style={styles.cardKilos}>{piece.kilos} kg</Text>
+                )}
+              </View>
+            </View>
+
+            {/* Botones de edición/guardado */}
+            <View style={styles.buttonsContainer}>
+              {editingId === index ? (
+                <>
+                  <TouchableOpacity 
+                    style={[styles.button, styles.saveButton]} 
+                    onPress={() => handleSave(index)}
+                  >
+                    <Text style={styles.buttonText}>Guardar</Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity 
+                    style={[styles.button, styles.cancelButton]} 
+                    onPress={handleCancel}
+                  >
+                    <Text style={styles.buttonText}>Cancelar</Text>
+                  </TouchableOpacity>
+                </>
+              ) : (
+                <TouchableOpacity 
+                  style={[styles.button, styles.editButton]} 
+                  onPress={() => handleEdit(index)}
+                >
+                  <Text style={styles.buttonText}>Editar</Text>
+                </TouchableOpacity>
+              )}
+            </View>
+          </View>
+        ))}
+      </View>
+    </ScrollView>
+  );
+};
+
+// Estilos actualizados
+const styles = StyleSheet.create({
+    scrollContainer: {
+    flex: 1,
+    padding: 10,
+  },
+  cardsContainer: {
+    flex: 1,
+    padding: 10,
+  },
+  card: {
+    backgroundColor: '#fff',
+    borderRadius: 10,
+    padding: 15,
+    marginBottom: 15,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    elevation: 3,
+  },
+  cardContent: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  cardImage: {
+    width: 80,
+    height: 80,
+    borderRadius: 5,
+    marginRight: 10,
+  },
+  cardMiddle: {
+    flex: 1,
+    marginRight: 10,
+  },
+  cardTitle: {
+    fontSize: 14,
+    fontWeight: 'bold',
+    marginBottom: 5,
+    color: '#cc0000',
+  },
+  cardPrice: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    color: '#000',
+  },
+  originalPrice: {
+    fontSize: 12,
+    color: '#999',
+    textDecorationLine: 'line-through',
+  },
+  cardRight: {
+    alignItems: 'flex-end',
+    justifyContent: 'center',
+  },
+  cardKilos: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    color: '#555',
+  }, 
+  input: {
+    borderWidth: 1,
+    borderColor: '#ddd',
+    borderRadius: 5,
+    padding: 8,
+    marginBottom: 5,
+    backgroundColor: '#fff',
+  },
+  kilosInput: {
+    width: 60,
+    textAlign: 'center',
+  },
+  buttonsContainer: {
+    flexDirection: 'row',
+    justifyContent: 'flex-end',
+    marginTop: 10,
+  },
+  button: {
+    paddingVertical: 6,
+    paddingHorizontal: 12,
+    borderRadius: 5,
+    marginLeft: 10,
+    minWidth: 70,
+    alignItems: 'center',
+  },
+  editButton: {
+    backgroundColor: '#cc0000',
+  },
+  saveButton: {
+    backgroundColor: '#28a745',
+  },
+  cancelButton: {
+    backgroundColor: '#6c757d',
+  },
+  buttonText: {
+    color: '#fff',
+    fontWeight: 'bold',
+  },
+});

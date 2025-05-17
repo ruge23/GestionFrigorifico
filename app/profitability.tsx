@@ -54,7 +54,7 @@ const ProfitabilityScreen = () => {
         <SafeAreaView style={styles.safeArea}>
             <StatusBar backgroundColor="#cc0000" barStyle="light-content" />
             <View style={styles.header}>
-                <Text style={styles.headerTitle}>Análisis de Rentabilidad</Text>
+                <Text style={styles.headerTitle}>Análisis de Balance</Text>
             </View>
             <ScrollView style={styles.container}>
                 {/* <Text style={styles.title}>Análisis de Rentabilidad</Text> */}

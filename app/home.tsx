@@ -51,7 +51,7 @@ const HomeScreen = () => {
           onPress={() => router.push('/profitability')}
         >
           <Icon name="trending-up" size={50} color="#cc0000" />
-          <Text style={styles.gridText}>Rentabilidad</Text>
+          <Text style={styles.gridText}>Balance</Text>
         </TouchableOpacity>
       </View>
     </SafeAreaView>

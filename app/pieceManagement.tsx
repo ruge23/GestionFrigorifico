@@ -15,6 +15,7 @@ import {
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { TabView, SceneMap, TabBar } from 'react-native-tab-view';
 import { cortesDeCarne } from '../constants';
+import { EditableViewTab } from '@/components/EditableViewTab';
 
 // Definición de tipos
 type Piece = {
@@ -93,7 +94,7 @@ const EditTab = ({
 
     {/* Resumen */}
     <View style={styles.summaryContainer}>
-      <Text style={styles.summaryTitle}>Rendimiento de peso</Text>
+      <Text style={styles.summaryTitle}>Balance de Piezas</Text>
       <View style={styles.summaryRow}>
         <Text style={styles.summaryLabel}>Peso Total:</Text>
         <Text style={styles.summaryValue}>{totals.totalKilos} kg</Text>
@@ -102,10 +103,10 @@ const EditTab = ({
         <Text style={styles.summaryLabel}>Valor Total:</Text>
         <Text style={styles.summaryValue}>$ {totals.totalPrice}</Text>
       </View>
-      <View style={styles.summaryRow}>
+      {/* <View style={styles.summaryRow}>
         <Text style={styles.summaryLabel}>% Beneficio:</Text>
         <Text style={styles.summaryValue}>{totals.profitPercentage}%</Text>
-      </View>
+      </View> */}
     </View>
   </ScrollView>
 );
@@ -193,12 +194,7 @@ const PieceManagementScreen: React.FC = () => {
 
   const renderScene = SceneMap({
     edit: () => (
-      <EditTab 
-        pieces={pieces} 
-        updatePiece={updatePiece} 
-        addNewPiece={addNewPiece}
-        totals={totals}
-      />
+      <EditableViewTab pieces={cortesDeCarne} />
     ),
     view: () => <ViewTab pieces={cortesDeCarne} />,
   });
@@ -212,11 +208,12 @@ const PieceManagementScreen: React.FC = () => {
         {/* Header */}
         <View style={styles.header}>
           <Text style={styles.headerTitle}>Gestión de Despieces</Text>
-          {index === 1 && (
+          {/* Boton de Agregar Piezas */}
+          {/* {index === 1 && (
             <TouchableOpacity onPress={addNewPiece} style={styles.addButton}>
               <Icon name="add" size={24} color="#fff" />
             </TouchableOpacity>
-          )}
+          )} */}
         </View>
 
         {/* Tabs */}
