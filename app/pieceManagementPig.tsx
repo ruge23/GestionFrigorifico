@@ -14,7 +14,7 @@ import {
 } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { TabView, SceneMap, TabBar } from 'react-native-tab-view';
-import { cortesDeCarne } from '../constants';
+import { cortesDeCerdo } from '../constants';
 import { EditableViewTab } from '@/components/EditableViewTab';
 
 // Definición de tipos
@@ -112,7 +112,7 @@ const EditTab = ({
 );
 
 // Componente para la pestaña de Visualización
-const ViewTab = ({ pieces }: { pieces: typeof cortesDeCarne }) => (
+const ViewTab = ({ pieces }: { pieces: typeof cortesDeCerdo }) => (
   <ScrollView style={styles.scrollContainer}>
     <View style={styles.cardsContainer}>
       {pieces.map((piece, index) => (
@@ -144,19 +144,13 @@ const ViewTab = ({ pieces }: { pieces: typeof cortesDeCarne }) => (
 
 const PieceManagementScreen: React.FC = () => {
   const [totals, setTotals] = useState<Totals>(initialTotals);
-  const [modifiedPieces, setModifiedPieces] = useState(cortesDeCarne);
+  const [modifiedPieces, setModifiedPieces] = useState(cortesDeCerdo);
   const [index, setIndex] = useState(0);
   const [routes] = useState([
     { key: 'view', title: 'Ver Piezas' },
     { key: 'edit', title: 'Editar Piezas' },
   ]);
 
-  const handlePiecesChange = (updatedPieces: typeof cortesDeCarne) => {
-  console.log('Datos actualizados:', updatedPieces);
-  setModifiedPieces(updatedPieces);
-  
-  // Aquí puedes también guardar en AsyncStorage, enviar a una API, etc.
-};
 
   const calculateTotals = (piecesList: Piece[]): void => {
     let totalKilos = 0;
@@ -182,10 +176,10 @@ const PieceManagementScreen: React.FC = () => {
     edit: () => (
       <EditableViewTab 
         pieces={modifiedPieces} 
-        onPiecesChange={handlePiecesChange} 
+        onPiecesChange={setModifiedPieces} 
       />
     ),
-    view: () => <ViewTab pieces={cortesDeCarne} />,
+    view: () => <ViewTab pieces={cortesDeCerdo} />,
   });
 
   return (

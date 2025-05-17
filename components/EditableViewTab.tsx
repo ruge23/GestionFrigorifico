@@ -1,8 +1,13 @@
+import { cortesDeCarne } from '@/constants';
 import { useState } from 'react';
 import { View, ScrollView, Text, TextInput, StyleSheet, Image, TouchableOpacity } from 'react-native';
-import { cortesDeCarne } from '@/constants';
 
-export const EditableViewTab = ({ pieces: initialPieces }: { pieces: typeof cortesDeCarne }) => {
+interface EditableViewTabProps {
+  pieces: typeof cortesDeCarne;
+  onPiecesChange?: (updatedPieces: typeof cortesDeCarne) => void;
+}
+
+export const EditableViewTab = ({ pieces: initialPieces, onPiecesChange }: EditableViewTabProps) => {
   const [pieces, setPieces] = useState(initialPieces);
   const [editingId, setEditingId] = useState<number | null>(null);
   const [editValues, setEditValues] = useState({ precio: '', kilos: '' });
@@ -10,7 +15,7 @@ export const EditableViewTab = ({ pieces: initialPieces }: { pieces: typeof cort
   const handleEdit = (index: number) => {
     setEditingId(index);
     setEditValues({
-      precio: pieces[index].precio.replace('$', '').trim(),
+      precio: pieces[index].precio.replace('$', '').replace('.', '').replace(',', '.').trim(),
       kilos: pieces[index].kilos
     });
   };
@@ -19,12 +24,17 @@ export const EditableViewTab = ({ pieces: initialPieces }: { pieces: typeof cort
     const updatedPieces = [...pieces];
     updatedPieces[index] = {
       ...updatedPieces[index],
-      precio: `$${editValues.precio}`,
+      precio: `$${editValues.precio.replace('.', ',')}`,
       kilos: editValues.kilos
     };
     
     setPieces(updatedPieces);
     setEditingId(null);
+    
+    // Notificar al componente padre sobre los cambios
+    if (onPiecesChange) {
+      onPiecesChange(updatedPieces);
+    }
   };
 
   const handleCancel = () => {
@@ -32,6 +42,13 @@ export const EditableViewTab = ({ pieces: initialPieces }: { pieces: typeof cort
   };
 
   const handleChange = (field: 'precio' | 'kilos', value: string) => {
+    // Validar que solo sean números
+    if (field === 'kilos') {
+      if (!/^\d*\.?\d*$/.test(value)) return;
+    } else {
+      if (!/^\d*\.?\d*$/.test(value)) return;
+    }
+    
     setEditValues(prev => ({
       ...prev,
       [field]: value
@@ -41,7 +58,7 @@ export const EditableViewTab = ({ pieces: initialPieces }: { pieces: typeof cort
   return (
     <ScrollView style={styles.scrollContainer}>
       <View style={styles.cardsContainer}>
-        {pieces.map((piece:any, index: any) => (
+        {pieces.map((piece: any, index: any) => (
           <View key={index} style={styles.card}>
             <View style={styles.cardContent}>
               {/* Imagen a la izquierda */}
@@ -120,7 +137,6 @@ export const EditableViewTab = ({ pieces: initialPieces }: { pieces: typeof cort
     </ScrollView>
   );
 };
-
 // Estilos actualizados
 const styles = StyleSheet.create({
     scrollContainer: {

@@ -3,5 +3,8 @@ export type RootStackParamList = {
   home: undefined;
   category: undefined;
   pieceManagement: undefined;
+  pieceManagementPig: undefined;
+  pieceManagementEmb: undefined;
   profitability: undefined;
+  sales: undefined;
 };

@@ -51,6 +51,18 @@ export default function Layout() {
             headerShown: false,
           })}
         />
+        <Stack.Screen
+          name="pieceManagementPig"
+          options={({ route }) => ({
+            headerShown: false,
+          })}
+        />
+        <Stack.Screen
+          name="pieceManagementEmb"
+          options={({ route }) => ({
+            headerShown: false,
+          })}
+        />
 
         {/* Rentabilidad */}
         <Stack.Screen

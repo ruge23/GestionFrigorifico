@@ -28,7 +28,10 @@ const HomeScreen = () => {
             <MaterialCommunityIcons name="cow" size={50} color="#cc0000" />
             <Text style={styles.gridText}>Carne Vacuna</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.gridItem}>
+          <TouchableOpacity
+            style={styles.gridItem}
+            onPress={() => router.push('/pieceManagementPig')}
+          >
             <MaterialCommunityIcons name="pig" size={50} color="#cc0000" />
             <Text style={styles.gridText}>Carne Porcina</Text>
           </TouchableOpacity>
@@ -38,7 +41,7 @@ const HomeScreen = () => {
         <View style={styles.topRow}>
           <TouchableOpacity
             style={styles.gridItem}
-            // onPress={() => router.push('/category')}
+            onPress={() => router.push('/pieceManagementEmb')}
           >
             <MaterialCommunityIcons name="food-hot-dog" size={50} color="#cc0000" />
             <Text style={styles.gridText}>Embutidos</Text>

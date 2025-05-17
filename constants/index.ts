@@ -114,3 +114,113 @@ export const cortesDeCarne = [
     marca: "Frescos"
   }
 ];
+
+export const cortesDeCerdo = [
+  {
+    nombre: "PECHITO DE CERDO X 1 KG",
+    kilos: "1",
+    precio: "$6.590,00",
+    precioSinImpuestos: "$5.420,81",
+    imagen: "https://hiperlibertad.vtexassets.com/arquivos/ids/176726-170-170?v=637544883652500000&width=170&height=170&aspect=true",
+    marca: "Mir"
+  },
+  {
+    nombre: "COSTELETA DE CERDO x 500 g",
+    kilos: "0.5",
+    precio: "$4.490,00",
+    precioSinImpuestos: "$4.063,35",
+    imagen: "https://hiperlibertad.vtexassets.com/arquivos/ids/176438-170-170?v=637540053547500000&width=170&height=170&aspect=true",
+    marca: "Frescos"
+  }
+];
+
+export const embutidos = [
+  {
+    nombre: "CHORIZO ENVASADO AL VACIO X 450 G.",
+    kilos: "0.45",
+    precio: "$7.090,00",
+    precioSinImpuestos: "$5.859,50",
+    imagen: "https://hiperlibertad.vtexassets.com/arquivos/ids/212585-170-170?v=638271928218370000&width=170&height=170&aspect=true",
+    marca: "Mir"
+  },
+  {
+    nombre: "MILANESAS DE NALGA X500G",
+    kilos: "0.5",
+    precio: "$5.990,00",
+    precioSinImpuestos: "$4.950,41",
+    imagen: "https://hiperlibertad.vtexassets.com/arquivos/ids/176432-170-170?v=637540053535500000&width=170&height=170&aspect=true",
+    marca: "Mir"
+  },
+  {
+    nombre: "CHORIZO MAGRET X 400 G.",
+    kilos: "0.4",
+    precio: "$4.490,00",
+    precioSinImpuestos: "$3.710,74",
+    imagen: "https://hiperlibertad.vtexassets.com/arquivos/ids/176565-170-170?v=637541798141770000&width=170&height=170&aspect=true",
+    marca: "Mir"
+  },
+  {
+    nombre: "MORCILLA AL VERDEO VACIO",
+    kilos: "1", // No se especifica el peso en el nombre, asumo 1 unidad
+    precio: "$5.490,00",
+    precioSinImpuestos: "$4.537,19",
+    imagen: "https://hiperlibertad.vtexassets.com/arquivos/ids/227606-170-170?v=638550911683700000&width=170&height=170&aspect=true",
+    marca: "Mir"
+  },
+  {
+    nombre: "CHORIZO PURO CERDO ENVASADO AL VACIO X 450 GR",
+    kilos: "0.45",
+    precio: "$7.090,00",
+    precioSinImpuestos: "$5.859,50",
+    imagen: "https://hiperlibertad.vtexassets.com/arquivos/ids/225950-170-170?v=638519889666270000&width=170&height=170&aspect=true",
+    marca: "Mir"
+  },
+  {
+    nombre: "SALCHICHA MAGRET X 350 G.",
+    kilos: "0.35",
+    precio: "$5.090,00",
+    precioSinImpuestos: "$4.206,61",
+    imagen: "https://hiperlibertad.vtexassets.com/arquivos/ids/168439-170-170?v=637352842852900000&width=170&height=170&aspect=true",
+    marca: "Mir"
+  },
+  {
+    nombre: "MORCILLA VERDEO BOMBON CAJAS",
+    kilos: "1", // No se especifica el peso en el nombre, asumo 1 unidad
+    precio: "$5.490,00",
+    precioSinImpuestos: "$4.537,19",
+    imagen: "https://hiperlibertad.vtexassets.com/arquivos/ids/227607-170-170?v=638550915394800000&width=170&height=170&aspect=true",
+    marca: "Mir"
+  },
+  {
+    nombre: "CHORIZO MAGRET CON JAMÓN X 400 G.",
+    kilos: "0.4",
+    precio: "$5.290,00",
+    precioSinImpuestos: "$4.371,90",
+    imagen: "https://hiperlibertad.vtexassets.com/arquivos/ids/168354-170-170?v=637352842481100000&width=170&height=170&aspect=true",
+    marca: "Mir"
+  },
+  {
+    nombre: "MORCILLA MAGRET X 400 G.",
+    kilos: "0.4",
+    precio: "$3.290,00",
+    precioSinImpuestos: "$2.719,01",
+    imagen: "https://hiperlibertad.vtexassets.com/arquivos/ids/176566-170-170?v=637541798148770000&width=170&height=170&aspect=true",
+    marca: "Mir"
+  },
+  {
+    nombre: "MORCILLA MAGRET VASCA X 400 G.",
+    kilos: "0.4",
+    precio: "$4.290,00",
+    precioSinImpuestos: "$3.545,45",
+    imagen: "https://hiperlibertad.vtexassets.com/arquivos/ids/168355-170-170?v=637352842483170000&width=170&height=170&aspect=true",
+    marca: "Mir"
+  },
+  {
+    nombre: "MORCILLA BOMBÓN MAGRET X 400 G.",
+    kilos: "0.4",
+    precio: "$3.690,00",
+    precioSinImpuestos: "$3.049,59",
+    imagen: "https://hiperlibertad.vtexassets.com/arquivos/ids/168442-170-170?v=637352842859030000&width=170&height=170&aspect=true",
+    marca: "Mir"
+  }
+];

@@ -14,7 +14,7 @@ import {
 } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { TabView, SceneMap, TabBar } from 'react-native-tab-view';
-import { cortesDeCarne } from '../constants';
+import { embutidos } from '../constants';
 import { EditableViewTab } from '@/components/EditableViewTab';
 
 // Definición de tipos
@@ -112,7 +112,7 @@ const EditTab = ({
 );
 
 // Componente para la pestaña de Visualización
-const ViewTab = ({ pieces }: { pieces: typeof cortesDeCarne }) => (
+const ViewTab = ({ pieces }: { pieces: typeof embutidos }) => (
   <ScrollView style={styles.scrollContainer}>
     <View style={styles.cardsContainer}>
       {pieces.map((piece, index) => (
@@ -143,20 +143,35 @@ const ViewTab = ({ pieces }: { pieces: typeof cortesDeCarne }) => (
 );
 
 const PieceManagementScreen: React.FC = () => {
+  const [pieces, setPieces] = useState<Piece[]>(initialPieces);
   const [totals, setTotals] = useState<Totals>(initialTotals);
-  const [modifiedPieces, setModifiedPieces] = useState(cortesDeCarne);
+  const [modifiedPieces, setModifiedPieces] = useState(embutidos);
   const [index, setIndex] = useState(0);
   const [routes] = useState([
     { key: 'view', title: 'Ver Piezas' },
     { key: 'edit', title: 'Editar Piezas' },
   ]);
 
-  const handlePiecesChange = (updatedPieces: typeof cortesDeCarne) => {
-  console.log('Datos actualizados:', updatedPieces);
-  setModifiedPieces(updatedPieces);
-  
-  // Aquí puedes también guardar en AsyncStorage, enviar a una API, etc.
-};
+  const addNewPiece = (): void => {
+    setPieces([...pieces, { name: 'Nueva Pieza', pvp: '0.00', kilos: '0.00', price: '0.00' }]);
+  };
+
+  const updatePiece = (index: number, field: PieceField, value: string): void => {
+    const updatedPieces = [...pieces];
+    updatedPieces[index] = {
+      ...updatedPieces[index],
+      [field]: value
+    };
+    
+    if (field === 'pvp' || field === 'kilos') {
+      const pvp = parseFloat(updatedPieces[index].pvp) || 0;
+      const kilos = parseFloat(updatedPieces[index].kilos) || 0;
+      updatedPieces[index].price = (pvp * kilos).toFixed(2);
+    }
+    
+    setPieces(updatedPieces);
+    calculateTotals(updatedPieces);
+  };
 
   const calculateTotals = (piecesList: Piece[]): void => {
     let totalKilos = 0;
@@ -182,10 +197,10 @@ const PieceManagementScreen: React.FC = () => {
     edit: () => (
       <EditableViewTab 
         pieces={modifiedPieces} 
-        onPiecesChange={handlePiecesChange} 
+        onPiecesChange={setModifiedPieces} 
       />
     ),
-    view: () => <ViewTab pieces={cortesDeCarne} />,
+    view: () => <ViewTab pieces={embutidos} />,
   });
 
   return (
