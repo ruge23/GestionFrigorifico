@@ -84,27 +84,11 @@ const LoginScreen = () => {
             <Text style={styles.subtitle}>Ingresa tus credenciales</Text>
 
             {/* Usuario */}
-            {/* <View style={styles.inputContainer}>
+            <View style={styles.inputContainer}>
               <TextInput
                 style={[styles.input, usernameError ? styles.inputError : null]}
                 placeholder="Usuario"
                 placeholderTextColor="#666"
-                value={username}
-                onChangeText={setUsername}
-                autoCapitalize="none"
-              />
-              {usernameError && (
-                <Text style={styles.errorText}>{usernameError}</Text>
-              )}
-            </View> */}
-            <View style={styles.inputContainer}>
-              <TextInput
-                style={[
-                  styles.input,
-                  usernameError ? styles.inputError : null
-                ]}
-                placeholder="Usuario"
-                placeholderTextColor="#888"
                 value={username}
                 onChangeText={setUsername}
                 autoCapitalize="none"
@@ -117,7 +101,7 @@ const LoginScreen = () => {
             {/* Contraseña */}
             <View style={styles.passwordContainer}>
               <TextInput
-                style={styles.input}
+                style={[styles.input, passwordError ? styles.inputError : null]}
                 placeholder="Contraseña"
                 placeholderTextColor="#666"
                 secureTextEntry={!showPassword}
@@ -148,7 +132,7 @@ const LoginScreen = () => {
                 styles.button,
                 isLoading ? styles.buttonDisabled : null
               ]}
-              onPress={() => router.push('/home')}
+              onPress={handleLogin}
               disabled={isLoading}
               activeOpacity={0.8}
             >
