@@ -1,5 +1,5 @@
 import { cortesDeCarne } from '@/constants';
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import { View, ScrollView, Text, TextInput, StyleSheet, Image, TouchableOpacity } from 'react-native';
 
 interface EditableViewTabProps {
@@ -12,10 +12,33 @@ export const EditableViewTab = ({ pieces: initialPieces, onPiecesChange }: Edita
   const [editingId, setEditingId] = useState<number | null>(null);
   const [editValues, setEditValues] = useState({ precio: '', kilos: '' });
 
+  // Calcular totales
+  const totals = useMemo(() => {
+    let totalKilos = 0;
+    let totalPrice = 0;
+
+    pieces.forEach(piece => {
+      const kilos = parseFloat(piece.kilos) || 0;
+      const price = parseFloat(piece.precio.replace('$', '').replace(/\./g, '').replace(',', '.')) || 0;
+      
+      totalKilos += kilos;
+      totalPrice += price;
+    });
+
+    return {
+      totalKilos: totalKilos.toFixed(2),
+      totalPrice: totalPrice.toLocaleString('es-AR', {
+        style: 'currency',
+        currency: 'ARS',
+        minimumFractionDigits: 2
+      }).replace('ARS', '').trim()
+    };
+  }, [pieces]);
+
   const handleEdit = (index: number) => {
     setEditingId(index);
     setEditValues({
-      precio: pieces[index].precio.replace('$', '').replace('.', '').replace(',', '.').trim(),
+      precio: pieces[index].precio.replace('$', '').replace(/\./g, '').replace(',', '.').trim(),
       kilos: pieces[index].kilos
     });
   };
@@ -24,14 +47,16 @@ export const EditableViewTab = ({ pieces: initialPieces, onPiecesChange }: Edita
     const updatedPieces = [...pieces];
     updatedPieces[index] = {
       ...updatedPieces[index],
-      precio: `$${editValues.precio.replace('.', ',')}`,
+      precio: `$${Number(editValues.precio).toLocaleString('es-AR', {
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2
+      })}`,
       kilos: editValues.kilos
     };
     
     setPieces(updatedPieces);
     setEditingId(null);
     
-    // Notificar al componente padre sobre los cambios
     if (onPiecesChange) {
       onPiecesChange(updatedPieces);
     }
@@ -133,6 +158,18 @@ export const EditableViewTab = ({ pieces: initialPieces, onPiecesChange }: Edita
             </View>
           </View>
         ))}
+        {/* Resumen de totales */}
+        <View style={styles.summaryContainer}>
+          <Text style={styles.summaryTitle}>Balance de Piezas</Text>
+          <View style={styles.summaryRow}>
+            <Text style={styles.summaryLabel}>Peso Total:</Text>
+            <Text style={styles.summaryValue}>{totals.totalKilos} kg</Text>
+          </View>
+          <View style={styles.summaryRow}>
+            <Text style={styles.summaryLabel}>Valor Total:</Text>
+            <Text style={styles.summaryValue}> {totals.totalPrice}</Text>
+          </View>
+        </View>
       </View>
     </ScrollView>
   );
@@ -234,5 +271,35 @@ const styles = StyleSheet.create({
   buttonText: {
     color: '#fff',
     fontWeight: 'bold',
+  },
+  summaryContainer: {
+    backgroundColor: '#f8f9fa',
+    borderRadius: 10,
+    padding: 15,
+    marginTop: 10,
+    borderWidth: 1,
+    borderColor: '#e9ecef',
+  },
+  summaryTitle: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    marginBottom: 10,
+    color: '#333',
+    textAlign: 'center',
+  },
+  summaryRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginBottom: 8,
+  },
+  summaryLabel: {
+    fontSize: 14,
+    color: '#555',
+    fontWeight: '600',
+  },
+  summaryValue: {
+    fontSize: 14,
+    fontWeight: 'bold',
+    color: '#000',
   },
 });
