@@ -1,42 +1,79 @@
-import { cortesDeCarne } from '@/constants';
 import { useMemo, useState } from 'react';
-import { View, ScrollView, Text, TextInput, StyleSheet, Image, TouchableOpacity } from 'react-native';
+import { Image, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { cortesDeCarne } from '../constants';
 
 interface EditableViewTabProps {
   pieces: typeof cortesDeCarne;
   onPiecesChange?: (updatedPieces: typeof cortesDeCarne) => void;
 }
 
+type ImageKeys =
+  | 'molida.jpeg'
+  | 'comboAsado.jpeg'
+  | 'nalgaFeteada.jpeg'
+  | 'carne_picada.jpeg'
+  | 'osobuco.jpeg'
+  | 'cuadril.jpeg'
+  | 'costeleta.jpeg'
+  | 'costilla_novillo.jpeg'
+  | 'bolaDeLomo.jpeg'
+  | 'tapaDeAsado.jpeg';
+
+const imageMap: Record<ImageKeys, any> = {
+  'molida.jpeg': require('../assets/images/carne_vacuna/molida.jpeg'),
+  'comboAsado.jpeg': require('../assets/images/carne_vacuna/comboAsado.jpeg'),
+  'nalgaFeteada.jpeg': require('../assets/images/carne_vacuna/nalgaFeteada.jpeg'),
+  'carne_picada.jpeg': require('../assets/images/carne_vacuna/carne_picada.jpeg'),
+  'osobuco.jpeg': require('../assets/images/carne_vacuna/osobuco.jpeg'),
+  'cuadril.jpeg': require('../assets/images/carne_vacuna/cuadril.jpeg'),
+  'costeleta.jpeg': require('../assets/images/carne_vacuna/costeleta.jpeg'),
+  'costilla_novillo.jpeg': require('../assets/images/carne_vacuna/costilla_novillo.jpeg'),
+  'bolaDeLomo.jpeg': require('../assets/images/carne_vacuna/bolaDeLomo.jpeg'),
+  'tapaDeAsado.jpeg': require('../assets/images/carne_vacuna/tapaDeAsado.jpeg'),
+};
+
 export const EditableViewTab = ({ pieces: initialPieces, onPiecesChange }: EditableViewTabProps) => {
-  const [pieces, setPieces] = useState(initialPieces);
+  const [pieces, setPieces] = useState(() => {
+    if (!Array.isArray(initialPieces)) return [];
+    return initialPieces.map(piece => ({
+      ...piece,
+      precio: piece.precio || '$0,00',
+      kilos: piece.kilos || '0'
+    }));
+  });
   const [editingId, setEditingId] = useState<number | null>(null);
   const [editValues, setEditValues] = useState({ precio: '', kilos: '' });
 
   // Calcular totales
   const totals = useMemo(() => {
-  let totalKilos = 0;
-  let totalPrice = 0;
+    let totalKilos = 0;
+    let totalPrice = 0;
 
-  pieces.forEach(piece => {
-    const kilos = parseFloat(piece.kilos) || 0;
-    // Extraer el valor numérico del precio (eliminar $, puntos y cambiar coma por punto)
-    const pricePerKilo = parseFloat(
-      piece.precio.replace('$', '').replace(/\./g, '').replace(',', '.')
-    ) || 0;
-    
-    totalKilos += kilos;
-    totalPrice += pricePerKilo * kilos; // Multiplicamos precio por kilos
-  });
+    pieces.forEach(piece => {
+      try {
+        const kilos = parseFloat(piece.kilos.replace(',', '.')) || 0;
+        const numericPrice = parseFloat(
+          piece.precio
+            .replace(/[^\d,-]/g, '')
+            .replace(',', '.')
+        ) || 0;
 
-  return {
-    totalKilos: totalKilos.toFixed(2),
-    totalPrice: totalPrice.toLocaleString('es-AR', {
-      style: 'currency',
-      currency: 'ARS',
-      minimumFractionDigits: 2
-    }).replace('ARS', '').trim()
-  };
-}, [pieces]);
+        totalKilos += kilos;
+        totalPrice += numericPrice * kilos;
+      } catch (error) {
+        console.error('Error processing piece:', piece, error);
+      }
+    });
+
+    return {
+      totalKilos: totalKilos.toFixed(2),
+      totalPrice: totalPrice.toLocaleString('es-AR', {
+        style: 'currency',
+        currency: 'ARS',
+        minimumFractionDigits: 2
+      }).replace('ARS', '').trim()
+    };
+  }, [pieces]);
 
   const handleEdit = (index: number) => {
     setEditingId(index);
@@ -56,10 +93,10 @@ export const EditableViewTab = ({ pieces: initialPieces, onPiecesChange }: Edita
       })}`,
       kilos: editValues.kilos
     };
-    
+
     setPieces(updatedPieces);
     setEditingId(null);
-    
+
     if (onPiecesChange) {
       onPiecesChange(updatedPieces);
     }
@@ -76,12 +113,16 @@ export const EditableViewTab = ({ pieces: initialPieces, onPiecesChange }: Edita
     } else {
       if (!/^\d*\.?\d*$/.test(value)) return;
     }
-    
+
     setEditValues(prev => ({
       ...prev,
       [field]: value
     }));
   };
+
+  if (!initialPieces || !Array.isArray(initialPieces)) {
+    return <View style={{ flex: 1, justifyContent: 'center' }}><Text>No hay datos</Text></View>;
+  }
 
   return (
     <ScrollView style={styles.scrollContainer}>
@@ -90,16 +131,18 @@ export const EditableViewTab = ({ pieces: initialPieces, onPiecesChange }: Edita
           <View key={index} style={styles.card}>
             <View style={styles.cardContent}>
               {/* Imagen a la izquierda */}
-              <Image 
-                source={{ uri: piece.imagen }} 
-                style={styles.cardImage} 
-                resizeMode="contain"
-              />
-              
+              {imageMap[piece.imagen as ImageKeys] && (
+                <Image
+                  source={imageMap[piece.imagen as ImageKeys]}
+                  style={styles.cardImage}
+                  resizeMode="contain"
+                />
+              )}
+
               {/* Contenido del medio (nombre y precio) */}
               <View style={styles.cardMiddle}>
                 <Text style={styles.cardTitle} numberOfLines={2}>{piece.nombre}</Text>
-                
+
                 {editingId === index ? (
                   <TextInput
                     style={styles.input}
@@ -111,12 +154,8 @@ export const EditableViewTab = ({ pieces: initialPieces, onPiecesChange }: Edita
                 ) : (
                   <Text style={styles.cardPrice}>{piece.precio}</Text>
                 )}
-                
-                {piece.precioOriginal && (
-                  <Text style={styles.originalPrice}>{piece.precioOriginal}</Text>
-                )}
               </View>
-              
+
               {/* Kilos a la derecha */}
               <View style={styles.cardRight}>
                 {editingId === index ? (
@@ -137,22 +176,22 @@ export const EditableViewTab = ({ pieces: initialPieces, onPiecesChange }: Edita
             <View style={styles.buttonsContainer}>
               {editingId === index ? (
                 <>
-                  <TouchableOpacity 
-                    style={[styles.button, styles.saveButton]} 
+                  <TouchableOpacity
+                    style={[styles.button, styles.saveButton]}
                     onPress={() => handleSave(index)}
                   >
                     <Text style={styles.buttonText}>Guardar</Text>
                   </TouchableOpacity>
-                  <TouchableOpacity 
-                    style={[styles.button, styles.cancelButton]} 
+                  <TouchableOpacity
+                    style={[styles.button, styles.cancelButton]}
                     onPress={handleCancel}
                   >
                     <Text style={styles.buttonText}>Cancelar</Text>
                   </TouchableOpacity>
                 </>
               ) : (
-                <TouchableOpacity 
-                  style={[styles.button, styles.editButton]} 
+                <TouchableOpacity
+                  style={[styles.button, styles.editButton]}
                   onPress={() => handleEdit(index)}
                 >
                   <Text style={styles.buttonText}>Editar</Text>
@@ -179,7 +218,7 @@ export const EditableViewTab = ({ pieces: initialPieces, onPiecesChange }: Edita
 };
 // Estilos actualizados
 const styles = StyleSheet.create({
-    scrollContainer: {
+  scrollContainer: {
     flex: 1,
     padding: 10,
   },
@@ -236,7 +275,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: 'bold',
     color: '#555',
-  }, 
+  },
   input: {
     borderWidth: 1,
     borderColor: '#ddd',

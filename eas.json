@@ -9,10 +9,6 @@
       "distribution": "internal"
     },
     "preview": {
-      "android": {
-        "gradleCommand": ":app:assembleDebug",
-        "buildType": "apk"
-      },
       "distribution": "internal"
     },
     "production": {

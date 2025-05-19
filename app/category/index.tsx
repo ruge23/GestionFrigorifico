@@ -30,7 +30,7 @@ const HomeScreen = () => {
           </TouchableOpacity>
           <TouchableOpacity
             style={styles.gridItem}
-            onPress={() => router.push('/pieceManagementPig')}
+            onPress={() => router.push('/pieceManagement')}
           >
             <MaterialCommunityIcons name="pig" size={50} color="#cc0000" />
             <Text style={styles.gridText}>Carne Porcina</Text>
@@ -41,14 +41,14 @@ const HomeScreen = () => {
         <View style={styles.topRow}>
           <TouchableOpacity
             style={styles.gridItem}
-            onPress={() => router.push('/pieceManagementEmb')}
+            onPress={() => router.push('/pieceManagement')}
           >
             <MaterialCommunityIcons name="food-hot-dog" size={50} color="#cc0000" />
             <Text style={styles.gridText}>Embutidos</Text>
           </TouchableOpacity>
           <TouchableOpacity
             style={styles.gridItem}
-            onPress={() => router.push('/pieceManagementOthers')}
+            onPress={() => router.push('/pieceManagement')}
           >
             <MaterialIcons name="local-grocery-store" size={50} color="#cc0000" />
             <Text style={styles.gridText}>Otros</Text>
