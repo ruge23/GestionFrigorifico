@@ -23,14 +23,24 @@ const HomeScreen = () => {
         <View style={styles.topRow}>
           <TouchableOpacity
             style={styles.gridItem}
-            onPress={() => router.push('/pieceManagement')}
+            onPress={() => router.push({
+              pathname: '/pieceManagement',
+              params: {
+               pieces: 'vacuna'
+              }
+            })}
           >
             <MaterialCommunityIcons name="cow" size={50} color="#cc0000" />
             <Text style={styles.gridText}>Carne Vacuna</Text>
           </TouchableOpacity>
           <TouchableOpacity
             style={styles.gridItem}
-            onPress={() => router.push('/pieceManagement')}
+            onPress={() => router.push({
+              pathname: '/pieceManagement',
+              params: {
+               pieces: 'porcina'
+              }
+            })}
           >
             <MaterialCommunityIcons name="pig" size={50} color="#cc0000" />
             <Text style={styles.gridText}>Carne Porcina</Text>
@@ -41,14 +51,24 @@ const HomeScreen = () => {
         <View style={styles.topRow}>
           <TouchableOpacity
             style={styles.gridItem}
-            onPress={() => router.push('/pieceManagement')}
+            onPress={() => router.push({
+              pathname: '/pieceManagement',
+              params: {
+               pieces: 'embutidos'
+              }
+            })}
           >
             <MaterialCommunityIcons name="food-hot-dog" size={50} color="#cc0000" />
             <Text style={styles.gridText}>Embutidos</Text>
           </TouchableOpacity>
           <TouchableOpacity
             style={styles.gridItem}
-            onPress={() => router.push('/pieceManagement')}
+            onPress={() => router.push({
+              pathname: '/pieceManagement',
+              params: {
+               pieces: 'otros'
+              }
+            })}
           >
             <MaterialIcons name="local-grocery-store" size={50} color="#cc0000" />
             <Text style={styles.gridText}>Otros</Text>

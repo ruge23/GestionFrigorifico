@@ -88,7 +88,7 @@ export const cortesDeCerdo = [
     kilos: "1",
     precio: "$6.590,00",
     precioSinImpuestos: "$5.420,81",
-    imagen: "https://hiperlibertad.vtexassets.com/arquivos/ids/176726-170-170?v=637544883652500000&width=170&height=170&aspect=true",
+    imagen: "pechitoDeCerdo.jpeg",
     marca: "Mir"
   }
 ];
@@ -99,7 +99,7 @@ export const embutidos = [
     kilos: "0.45",
     precio: "$7.090,00",
     precioSinImpuestos: "$5.859,50",
-    imagen: "https://hiperlibertad.vtexassets.com/arquivos/ids/212585-170-170?v=638271928218370000&width=170&height=170&aspect=true",
+    imagen: "chorizo.png",
     marca: "Mir"
   },
   {
@@ -107,7 +107,7 @@ export const embutidos = [
     kilos: "0.5",
     precio: "$5.990,00",
     precioSinImpuestos: "$4.950,41",
-    imagen: "https://hiperlibertad.vtexassets.com/arquivos/ids/176432-170-170?v=637540053535500000&width=170&height=170&aspect=true",
+    imagen: "milanesas.jpeg",
     marca: "Mir"
   },
   {
@@ -115,7 +115,7 @@ export const embutidos = [
     kilos: "1", // No se especifica el peso en el nombre, asumo 1 unidad
     precio: "$5.490,00",
     precioSinImpuestos: "$4.537,19",
-    imagen: "https://hiperlibertad.vtexassets.com/arquivos/ids/227606-170-170?v=638550911683700000&width=170&height=170&aspect=true",
+    imagen: "morcilla.jpeg",
     marca: "Mir"
   },
   {
@@ -123,8 +123,7 @@ export const embutidos = [
     kilos: "0.35",
     precio: "$5.090,00",
     precioSinImpuestos: "$4.206,61",
-    imagen: "https://hiperlibertad.vtexassets.com/arquivos/ids/168439-170-170?v=637352842852900000&width=170&height=170&aspect=true",
-    marca: "Mir"
+    imagen: "salchicha.jpeg"
   },
 ];
 
@@ -134,7 +133,7 @@ export const otros = [
     kilos: "3",
     precio: "$3.499,00",
     precioSinImpuestos: "$2.891,74",
-    imagen: "https://hiperlibertad.vtexassets.com/arquivos/ids/168850-800-auto?v=637376070338530000&width=800&height=auto&aspect=true",
+    imagen: "carbon.jpeg",
     marca: "Mir"
   },
   {
@@ -142,7 +141,46 @@ export const otros = [
     kilos: "0.5",
     precio: "$6.200,00",
     precioSinImpuestos: "$4.063,35",
-    imagen: "https://hiperlibertad.vtexassets.com/arquivos/ids/167934-800-auto?v=637330156640400000&width=800&height=auto&aspect=true",
+    imagen: "huevos.jpeg",
     marca: "Frescos"
   }
 ];
+
+export type ImageKeys =
+  | 'molida.jpeg'
+  | 'comboAsado.jpeg'
+  | 'nalgaFeteada.jpeg'
+  | 'carne_picada.jpeg'
+  | 'osobuco.jpeg'
+  | 'cuadril.jpeg'
+  | 'costeleta.jpeg'
+  | 'costilla_novillo.jpeg'
+  | 'bolaDeLomo.jpeg'
+  | 'tapaDeAsado.jpeg'
+  | 'pechitoDeCerdo.jpeg'
+  | 'chorizo.png'
+  | 'milanesas.jpeg'
+  | 'morcilla.jpeg'
+  | 'salchicha.jpeg'
+  | 'carbon.jpeg'
+  | 'huevos.jpeg';
+
+export const imageMap: Record<ImageKeys, any> = {
+  'molida.jpeg': require('../assets/images/carne_vacuna/molida.jpeg'),
+  'comboAsado.jpeg': require('../assets/images/carne_vacuna/comboAsado.jpeg'),
+  'nalgaFeteada.jpeg': require('../assets/images/carne_vacuna/nalgaFeteada.jpeg'),
+  'carne_picada.jpeg': require('../assets/images/carne_vacuna/carne_picada.jpeg'),
+  'osobuco.jpeg': require('../assets/images/carne_vacuna/osobuco.jpeg'),
+  'cuadril.jpeg': require('../assets/images/carne_vacuna/cuadril.jpeg'),
+  'costeleta.jpeg': require('../assets/images/carne_vacuna/costeleta.jpeg'),
+  'costilla_novillo.jpeg': require('../assets/images/carne_vacuna/costilla_novillo.jpeg'),
+  'bolaDeLomo.jpeg': require('../assets/images/carne_vacuna/bolaDeLomo.jpeg'),
+  'tapaDeAsado.jpeg': require('../assets/images/carne_vacuna/tapaDeAsado.jpeg'),
+  'pechitoDeCerdo.jpeg':  require('../assets/images/carne_porcina/pechitoDeCerdo.jpeg'),
+  'chorizo.png': require('../assets/images/embutidos/chorizo.png'),
+  'milanesas.jpeg': require('../assets/images/embutidos/milanesas.jpeg'),
+  'morcilla.jpeg': require('../assets/images/embutidos/morcilla.jpeg'),
+  'salchicha.jpeg': require('../assets/images/embutidos/salchicha.jpeg'),
+  'carbon.jpeg': require('../assets/images/otros/carbon.jpeg'),
+  'huevos.jpeg': require('../assets/images/otros/huevos.jpeg'),
+};

@@ -1,36 +1,11 @@
 import { useMemo, useState } from 'react';
 import { Image, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
-import { cortesDeCarne } from '../constants';
+import { ImageKeys, imageMap } from '../constants';
 
 interface EditableViewTabProps {
-  pieces: typeof cortesDeCarne;
-  onPiecesChange?: (updatedPieces: typeof cortesDeCarne) => void;
+  pieces: any;
+  onPiecesChange?: (updatedPieces: any) => void;
 }
-
-type ImageKeys =
-  | 'molida.jpeg'
-  | 'comboAsado.jpeg'
-  | 'nalgaFeteada.jpeg'
-  | 'carne_picada.jpeg'
-  | 'osobuco.jpeg'
-  | 'cuadril.jpeg'
-  | 'costeleta.jpeg'
-  | 'costilla_novillo.jpeg'
-  | 'bolaDeLomo.jpeg'
-  | 'tapaDeAsado.jpeg';
-
-const imageMap: Record<ImageKeys, any> = {
-  'molida.jpeg': require('../assets/images/carne_vacuna/molida.jpeg'),
-  'comboAsado.jpeg': require('../assets/images/carne_vacuna/comboAsado.jpeg'),
-  'nalgaFeteada.jpeg': require('../assets/images/carne_vacuna/nalgaFeteada.jpeg'),
-  'carne_picada.jpeg': require('../assets/images/carne_vacuna/carne_picada.jpeg'),
-  'osobuco.jpeg': require('../assets/images/carne_vacuna/osobuco.jpeg'),
-  'cuadril.jpeg': require('../assets/images/carne_vacuna/cuadril.jpeg'),
-  'costeleta.jpeg': require('../assets/images/carne_vacuna/costeleta.jpeg'),
-  'costilla_novillo.jpeg': require('../assets/images/carne_vacuna/costilla_novillo.jpeg'),
-  'bolaDeLomo.jpeg': require('../assets/images/carne_vacuna/bolaDeLomo.jpeg'),
-  'tapaDeAsado.jpeg': require('../assets/images/carne_vacuna/tapaDeAsado.jpeg'),
-};
 
 export const EditableViewTab = ({ pieces: initialPieces, onPiecesChange }: EditableViewTabProps) => {
   const [pieces, setPieces] = useState(() => {

@@ -1,59 +1,77 @@
-import { View, ScrollView, Image, Text, StyleSheet } from 'react-native';
-import { cortesDeCarne } from '../../constants';
+import { View, ScrollView, Image, Text, StyleSheet, ActivityIndicator } from 'react-native';
+import { useLocalSearchParams } from 'expo-router';
+import { cortesDeCarne, cortesDeCerdo, embutidos, otros, ImageKeys, imageMap } from '../../constants';
+import { useEffect, useState } from 'react';
 
-type ImageKeys =
-  | 'molida.jpeg'
-  | 'comboAsado.jpeg'
-  | 'nalgaFeteada.jpeg'
-  | 'carne_picada.jpeg'
-  | 'osobuco.jpeg'
-  | 'cuadril.jpeg'
-  | 'costeleta.jpeg'
-  | 'costilla_novillo.jpeg'
-  | 'bolaDeLomo.jpeg'
-  | 'tapaDeAsado.jpeg';
-
-const imageMap: Record<ImageKeys, any> = {
-  'molida.jpeg': require('../../assets/images/carne_vacuna/molida.jpeg'),
-  'comboAsado.jpeg': require('../../assets/images/carne_vacuna/comboAsado.jpeg'),
-  'nalgaFeteada.jpeg': require('../../assets/images/carne_vacuna/nalgaFeteada.jpeg'),
-  'carne_picada.jpeg': require('../../assets/images/carne_vacuna/carne_picada.jpeg'),
-  'osobuco.jpeg': require('../../assets/images/carne_vacuna/osobuco.jpeg'),
-  'cuadril.jpeg': require('../../assets/images/carne_vacuna/cuadril.jpeg'),
-  'costeleta.jpeg': require('../../assets/images/carne_vacuna/costeleta.jpeg'),
-  'costilla_novillo.jpeg': require('../../assets/images/carne_vacuna/costilla_novillo.jpeg'),
-  'bolaDeLomo.jpeg': require('../../assets/images/carne_vacuna/bolaDeLomo.jpeg'),
-  'tapaDeAsado.jpeg': require('../../assets/images/carne_vacuna/tapaDeAsado.jpeg'),
-};
+type PieceType = 'vacuna' | 'porcina' | 'embutidos' | 'otros';
 
 export default function ViewTab() {
+  const params = useLocalSearchParams<{ pieces: PieceType }>();
+  const [loading, setLoading] = useState(true);
+  const [selectPieces, setSelectPieces] = useState(() => {
+  switch(params.pieces) {
+    case 'vacuna': return cortesDeCarne;
+    case 'porcina': return cortesDeCerdo;
+    case 'embutidos': return embutidos;
+    case 'otros': return otros;
+    default: return [];
+  }
+});
+
+  useEffect(() => {
+    setLoading(true);
+    const timer = setTimeout(() => {
+      if(params.pieces === 'vacuna') setSelectPieces(cortesDeCarne);
+      if(params.pieces === 'porcina') setSelectPieces(cortesDeCerdo);
+      if(params.pieces === 'embutidos') setSelectPieces(embutidos);
+      if(params.pieces === 'otros') setSelectPieces(otros);
+      setLoading(false);
+    }, 300); 
+    return () => clearTimeout(timer);
+  },[params.pieces]);
+
+  if (loading) {
+    return (
+      <View style={styles.loadingContainer}>
+        <ActivityIndicator size="large" color="#cc0000" />
+        <Text style={styles.loadingText}>Cargando productos...</Text>
+      </View>
+    );
+  }
+
   return (
     <ScrollView style={styles.scrollContainer}>
       <View style={styles.cardsContainer}>
-        {cortesDeCarne.map((piece, index) => (
-          <View key={index} style={styles.card}>
-            <View style={styles.cardContent}>
-              {imageMap[piece.imagen as ImageKeys] && (
-                <Image
-                  source={imageMap[piece.imagen as ImageKeys]}
-                  style={styles.cardImage}
-                  resizeMode="contain"
-                />
-              )}
-              
-              <View style={styles.cardMiddle}>
-                <Text style={styles.cardTitle} numberOfLines={2}>
-                  {piece.nombre}
-                </Text>
-                <Text style={styles.cardPrice}>{piece.precio}</Text>
-              </View>
-              
-              <View style={styles.cardRight}>
-                <Text style={styles.cardKilos}>{piece.kilos} kg</Text>
+        {selectPieces.length > 0 ? (
+          selectPieces.map((piece, index) => (
+            <View key={index} style={styles.card}>
+              <View style={styles.cardContent}>
+                {imageMap[piece.imagen as ImageKeys] && (
+                  <Image
+                    source={imageMap[piece.imagen as ImageKeys]}
+                    style={styles.cardImage}
+                    resizeMode="contain"
+                  />
+                )}
+                
+                <View style={styles.cardMiddle}>
+                  <Text style={styles.cardTitle} numberOfLines={2}>
+                    {piece.nombre}
+                  </Text>
+                  <Text style={styles.cardPrice}>{piece.precio}</Text>
+                </View>
+                
+                <View style={styles.cardRight}>
+                  <Text style={styles.cardKilos}>{piece.kilos} kg</Text>
+                </View>
               </View>
             </View>
+          ))
+        ) : (
+          <View style={styles.emptyContainer}>
+            <Text style={styles.emptyText}>No se encontraron productos</Text>
           </View>
-        ))}
+        )}
       </View>
     </ScrollView>
   );
@@ -185,5 +203,27 @@ const styles = StyleSheet.create({
     fontSize: 14,
     fontWeight: 'bold',
     color: '#000',
+  },
+  loadingContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#f8f9fa',
+  },
+  loadingText: {
+    marginTop: 16,
+    fontSize: 16,
+    color: '#cc0000',
+  },
+  emptyContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: 20,
+  },
+  emptyText: {
+    fontSize: 18,
+    color: '#555',
+    textAlign: 'center',
   },
 });
