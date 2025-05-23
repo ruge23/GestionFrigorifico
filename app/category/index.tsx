@@ -8,8 +8,10 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import { LuBeef } from "react-icons/lu";
+import { GiPig } from "react-icons/gi";
+import { GiSausage } from "react-icons/gi";
+import { TbBasketPlus } from "react-icons/tb";
 
 const HomeScreen = () => {
   return (
@@ -30,7 +32,7 @@ const HomeScreen = () => {
               }
             })}
           >
-            <MaterialCommunityIcons name="cow" size={50} color="#cc0000" />
+            <LuBeef size={60} color="#cc0000" />
             <Text style={styles.gridText}>Carne Vacuna</Text>
           </TouchableOpacity>
           <TouchableOpacity
@@ -42,7 +44,7 @@ const HomeScreen = () => {
               }
             })}
           >
-            <MaterialCommunityIcons name="pig" size={50} color="#cc0000" />
+            <GiPig size={60} color="#cc0000" />
             <Text style={styles.gridText}>Carne Porcina</Text>
           </TouchableOpacity>
         </View>
@@ -58,7 +60,7 @@ const HomeScreen = () => {
               }
             })}
           >
-            <MaterialCommunityIcons name="food-hot-dog" size={50} color="#cc0000" />
+            <GiSausage size={60} color="#cc0000" />
             <Text style={styles.gridText}>Embutidos</Text>
           </TouchableOpacity>
           <TouchableOpacity
@@ -70,7 +72,7 @@ const HomeScreen = () => {
               }
             })}
           >
-            <MaterialIcons name="local-grocery-store" size={50} color="#cc0000" />
+            <TbBasketPlus  size={60} color="#cc0000" />
             <Text style={styles.gridText}>Otros</Text>
           </TouchableOpacity>
         </View>

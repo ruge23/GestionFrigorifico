@@ -9,7 +9,12 @@ import {
   StatusBar,
 } from 'react-native';
 import { router } from 'expo-router';
-import Icon from 'react-native-vector-icons/MaterialIcons'; // Importa íconos profesionales
+import { CgMenu } from "react-icons/cg";
+import { FaUserCircle, FaCashRegister  } from "react-icons/fa";
+import { LuBeef } from "react-icons/lu";
+import { GiProgression } from "react-icons/gi";
+// import { MaterialIcons, MaterialCommunityIcons } from '@expo/vector-icons';
+// import Icon from 'react-native-vector-icons/MaterialIcons'; // Importa íconos profesionales
 
 const HomeScreen = () => {
   return (
@@ -18,11 +23,11 @@ const HomeScreen = () => {
       <StatusBar backgroundColor="#cc0000" barStyle="light-content" />
       <View style={styles.header}>
         <TouchableOpacity onPress={() => console.log("Abrir menú")}>
-          <Icon name="menu" size={28} color="#fff" style={styles.menuIcon} />
+          <CgMenu size={28} color="#fff" style={styles.menuIcon} />
         </TouchableOpacity>
         <Text style={styles.headerTitle}>Super Carnes Los Helguera</Text>
         <TouchableOpacity onPress={() => console.log("Ir a perfil")}>
-          <Icon name="account-circle" size={28} color="#fff" />
+          <FaUserCircle size={28} color="#fff" />
         </TouchableOpacity>
       </View>
 
@@ -33,14 +38,14 @@ const HomeScreen = () => {
             style={styles.gridItem}
             onPress={() => router.push('/category')} 
           >
-            <Icon name="kitchen" size={50} color="#cc0000" />
+            <LuBeef size={90} color="#cc0000" />
             <Text style={styles.gridText}>Piezas</Text>
           </TouchableOpacity>
           <TouchableOpacity
             style={styles.gridItem}
             onPress={() => router.push('/sales')}
           >
-            <Icon name="point-of-sale" size={50} color="#cc0000" />
+            <FaCashRegister size={90} color="#cc0000" />
             <Text style={styles.gridText}>Ventas</Text>
           </TouchableOpacity>
         </View>
@@ -50,7 +55,7 @@ const HomeScreen = () => {
           style={styles.fullWidthItem}
           onPress={() => router.push('/profitability')}
         >
-          <Icon name="trending-up" size={50} color="#cc0000" />
+          <GiProgression size={90} color="#cc0000" />
           <Text style={styles.gridText}>Balance</Text>
         </TouchableOpacity>
       </View>

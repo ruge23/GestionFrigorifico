@@ -1,5 +1,6 @@
 import { Tabs } from 'expo-router';
-import { MaterialIcons } from '@expo/vector-icons';
+import { FaListUl } from "react-icons/fa";
+import { CiEdit } from "react-icons/ci";
 import { KeyboardAvoidingView, SafeAreaView, View, Text, Platform, StyleSheet } from 'react-native';
 
 export default function Layout() {
@@ -30,7 +31,7 @@ export default function Layout() {
 						options={{
 							title: 'Ver Piezas',
 							tabBarIcon: ({ color }) => (
-								<MaterialIcons name="visibility" size={24} color={color} />
+								<FaListUl size={24} color={color} />
 							),
 						}}
 					/>
@@ -39,7 +40,7 @@ export default function Layout() {
 						options={{
 							title: 'Editar Piezas',
 							tabBarIcon: ({ color }) => (
-								<MaterialIcons name="edit" size={24} color={color} />
+								<CiEdit size={24} color={color} />
 							),
 						}}
 					/>
