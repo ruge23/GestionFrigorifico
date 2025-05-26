@@ -1,3 +1,5 @@
+import { ImageSourcePropType } from 'react-native';
+
 export const cortesDeCarne = [
   {
     nombre: "CARNE MOLIDA ESPECIAL X 500 G ECOMM",
@@ -165,7 +167,7 @@ export type ImageKeys =
   | 'carbon.jpeg'
   | 'huevos.jpeg';
 
-export const imageMap: Record<ImageKeys, any> = {
+export const imageMap: Record<string, ImageSourcePropType> = {
   'molida.jpeg': require('../assets/images/carne_vacuna/molida.jpeg'),
   'comboAsado.jpeg': require('../assets/images/carne_vacuna/comboAsado.jpeg'),
   'nalgaFeteada.jpeg': require('../assets/images/carne_vacuna/nalgaFeteada.jpeg'),
@@ -183,4 +185,11 @@ export const imageMap: Record<ImageKeys, any> = {
   'salchicha.jpeg': require('../assets/images/embutidos/salchicha.jpeg'),
   'carbon.jpeg': require('../assets/images/otros/carbon.jpeg'),
   'huevos.jpeg': require('../assets/images/otros/huevos.jpeg'),
+};
+
+export type PieceType = {
+	nombre: string;
+	precio: string;
+	kilos: string;
+	imagen: string;
 };

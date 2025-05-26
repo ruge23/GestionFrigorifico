@@ -1,5 +1,5 @@
 import { RootStackParamList } from '@/types';
-import { MaterialIcons } from '@expo/vector-icons';
+import { MdOutlineVisibility, MdOutlineVisibilityOff  } from "react-icons/md";
 import { router } from 'expo-router';
 // import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
@@ -115,11 +115,19 @@ const LoginScreen = () => {
                 style={styles.toggleButton}
                 onPress={() => setShowPassword(!showPassword)}
               >
-                <MaterialIcons
-                  name={showPassword ? 'visibility-off' : 'visibility'}
-                  size={24}
-                  color="#666"
-                />
+                { showPassword ? 
+                    <MdOutlineVisibilityOff
+                      name={showPassword ? 'visibility-off' : 'visibility'}
+                      size={24}
+                      color="#666"
+                    />
+                    :
+                    <MdOutlineVisibility
+                      name={showPassword ? 'visibility-off' : 'visibility'}
+                      size={24}
+                      color="#666"
+                    />
+                }
               </TouchableOpacity>
             </View>
             {passwordError && (
