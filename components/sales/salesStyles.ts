@@ -36,11 +36,10 @@ export const styles = StyleSheet.create({
     marginBottom: 20,
   },
   sectionTitle: {
-    fontSize: 16,
+    fontSize: 18,
     fontWeight: 'bold',
     color: '#333',
-    marginVertical: 15,
-    textAlign: 'center',
+    marginBottom: 10,
   },
   inputContainer: {
     marginBottom: 15,
@@ -113,76 +112,88 @@ export const styles = StyleSheet.create({
   },
   itemsListContainer: {
     marginTop: 20,
+    width: '100%',
   },
   itemContentContainer: {
     flexDirection: 'row',
     alignItems: 'center',
   },
   itemImage: {
-    width: 80,
-    height: 80,
+    width: 60,
+    height: 60,
     borderRadius: 8,
     marginRight: 12,
   },
   itemDetails: {
     flex: 1,
   },
-  detailsContainer: {
-    marginTop: 8,
-  },
-  detailRow: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginBottom: 4,
-  },
-  detailLabel: {
-    width: 60, // Ancho fijo para todos los labels
-    fontSize: 14,
-    color: '#555',
-    fontWeight: '500',
-  },
-  detailValue: {
-    flex: 1, // Ocupa el espacio restante
-    fontSize: 14,
-    fontWeight: '600',
-    color: '#333',
-    textAlign: 'right', // Alinea el valor a la derecha
-  },
-  itemCard: {
-    backgroundColor: '#fff',
-    borderRadius: 8,
-    padding: 15,
-    marginBottom: 10,
-    borderWidth: 1,
-    borderColor: '#e9ecef',
-  },
   itemHeader: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    marginBottom: 10,
+    marginBottom: 6,
   },
   itemName: {
-    fontSize: 15,
-    fontWeight: 'bold',
+    fontSize: 16,
+    fontWeight: '600',
     color: '#333',
     flex: 1,
+    marginRight: 10,
   },
   removeButton: {
-    backgroundColor: '#dc3545',
-    borderRadius: 15,
-    width: 30,
-    height: 30,
+    backgroundColor: '#FF4C4C',
+    width: 24,
+    height: 24,
+    borderRadius: 12,
     justifyContent: 'center',
     alignItems: 'center',
   },
   removeButtonText: {
-    color: '#fff',
-    fontSize: 18,
+    color: 'white',
+    fontSize: 16,
     fontWeight: 'bold',
+    lineHeight: 20,
+  },
+  detailsContainer: {
+    flexDirection: 'column',
+  },
+  detailRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginBottom: 4,
+  },
+  detailLabel: {
+    fontSize: 14,
+    color: '#666',
+  },
+  detailValue: {
+    fontSize: 14,
+    color: '#333',
+    fontWeight: '500',
   },
   itemTotalValue: {
-    color: '#cc0000',
+    fontWeight: 'bold',
+    color: '#2E7D32',
+  },
+  emptyListContainer: {
+    padding: 16,
+    alignItems: 'center',
+  },
+  emptyListText: {
+    fontSize: 16,
+    color: '#666',
+    fontStyle: 'italic',
+  },
+  itemCard: {
+    backgroundColor: '#fff',
+    borderRadius: 8,
+    padding: 12,
+    marginBottom: 10,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    elevation: 2,
   },
   grandTotalCard: {
     backgroundColor: '#f8f9fa',
@@ -191,18 +202,6 @@ export const styles = StyleSheet.create({
     marginTop: 15,
     borderWidth: 1,
     borderColor: '#e9ecef',
-  },
-  grandTotalRow: {
-    marginTop: 5,
-  },
-  grandTotalLabel: {
-    fontSize: 16,
-    color: '#333',
-  },
-  grandTotalValue: {
-    fontSize: 18,
-    color: '#cc0000',
-    fontWeight: 'bold',
   },
   summaryTitle: {
     fontSize: 16,
@@ -226,18 +225,100 @@ export const styles = StyleSheet.create({
     fontWeight: 'bold',
     color: '#000',
   },
-  totalRow: {
-    marginTop: 10,
-    paddingTop: 10,
-    borderTopWidth: 1,
-    borderTopColor: '#dee2e6',
+  grandTotalContainer: {
+  marginTop: 15,
+  padding: 15,
+  backgroundColor: '#f5f5f5',
+  borderRadius: 8,
+  borderWidth: 1,
+  borderColor: '#e0e0e0',
+},
+totalRow: {
+  flexDirection: 'row',
+  justifyContent: 'space-between',
+  marginBottom: 8,
+},
+totalLabel: {
+  fontSize: 16,
+  color: '#333',
+},
+totalValue: {
+  fontSize: 16,
+  color: '#333',
+  fontWeight: '500',
+},
+grandTotalRow: {
+  marginTop: 8,
+  paddingTop: 8,
+  borderTopWidth: 1,
+  borderTopColor: '#bdbdbd',
+},
+grandTotalLabel: {
+  fontSize: 18,
+  fontWeight: 'bold',
+  color: '#333',
+},
+grandTotalValue: {
+  fontSize: 18,
+  fontWeight: 'bold',
+  color: '#2E7D32',
+},
+  // Sales preview styles
+  table: {
+    borderWidth: 1,
+    borderColor: '#444',
+    borderRadius: 5,
+    marginVertical: 10,
+    width: '100%',
   },
-  totalLabel: {
-    fontSize: 16,
+  tableRow: {
+    flexDirection: 'row',
+    borderBottomWidth: 1,
+    borderBottomColor: '#444',
+  },
+  tableHeader: {
+    fontWeight: 'bold',
+    backgroundColor: '#333',
+  },
+  tableCell: {
+    flex: 1,
+    padding: 8,
+    textAlign: 'center',
     color: '#333',
   },
-  totalValue: {
+  totalsContainer: {
+    marginTop: 20,
+    padding: 10,
+    backgroundColor: '#f5f5f5',
+    borderRadius: 5,
+    width: '100%',
+  },
+  totalText: {
     fontSize: 16,
-    color: '#cc0000',
+    color: '#333',
+    textAlign: 'right',
+    marginVertical: 3,
+  },
+  grandTotal: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    color: '#333',
+    textAlign: 'right',
+    marginTop: 5,
+  },
+  buttonContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginTop: 20,
+    width: '100%',
+  },
+  button: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    padding: 15,
+    borderRadius: 5,
+    minWidth: '48%',
+    gap: 10,
   },
 });

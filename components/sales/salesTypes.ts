@@ -40,20 +40,23 @@ export interface CurrentItemSummaryProps {
   kilos: string;
 }
 
+export interface ItemVenta {
+  id: string;
+  nombre: string;
+  precioUnitario: number;
+  kilos: number;
+  total: number;
+  imagen: ImageKeys;
+}
+
+export interface VentaActual {
+  items: ItemVenta[];
+  total: number;
+}
+
 export interface AddedItemsListProps {
-  ventaActual: {
-    items: Array<{
-			imagen: any;
-      id: string;
-      nombre: string;
-      precioUnitario: number;
-      kilos: number;
-      total: number;
-    }>;
-    total: number;
-  };
+  ventaActual: VentaActual;
   removeItem: (id: string) => void;
-  imageMap?: Record<string, any>; // Mapa de imágenes
 }
 
 export interface GrandTotalSummaryProps {

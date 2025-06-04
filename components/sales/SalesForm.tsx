@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { router } from 'expo-router';
 import { SafeAreaView, ScrollView, KeyboardAvoidingView, Platform, View, Text } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../redux/store';
@@ -11,8 +12,9 @@ import AddedItemsList from './AddedItemsList';
 import GrandTotalSummary from './GrandTotalSummary';
 import { styles } from './salesStyles';
 import { parseArgentineKilos, parseArgentinePrice } from './salesUtils';
-import { cortesDeCarne, cortesDeCerdo, embutidos, otros, PieceType } from '../../constants';
+import { cortesDeCarne, cortesDeCerdo, embutidos, ImageKeys, otros, PieceType } from '../../constants';
 import { agregarItemVenta, eliminarItemVenta, finalizarVenta } from '../../redux/slices/ventasSlice';
+import { ItemVenta } from './salesTypes';
 
 const SalesForm = () => {
 	const [selectedCategory, setSelectedCategory] = useState<string>('');
@@ -35,45 +37,46 @@ const SalesForm = () => {
 	};
 
 	const handleAddItem = () => {
-		if (!selectedCategory || !selectedPiece || !kilos || isNaN(parseArgentineKilos(kilos)) || parseArgentineKilos(kilos) <= 0) {
-			alert('Por favor complete todos los campos correctamente');
-			return;
-		}
+  if (!selectedCategory || !selectedPiece || !kilos || isNaN(parseArgentineKilos(kilos)) || parseArgentineKilos(kilos) <= 0) {
+    alert('Por favor complete todos los campos correctamente');
+    return;
+  }
 
-		setIsLoading(true);
+  setIsLoading(true);
 
-		setTimeout(() => {
-			const pieces = getPiecesByCategory();
-			const piece = pieces.find(p => p.nombre === selectedPiece);
+  setTimeout(() => {
+    const pieces = getPiecesByCategory();
+    const piece = pieces.find(p => p.nombre === selectedPiece);
 
-			if (piece) {
-				const newItem = {
-					id: Date.now().toString(),
-					nombre: piece.nombre,
-					precioUnitario: parseArgentinePrice(piece.precio),
-					kilos: parseArgentineKilos(kilos),
-					total: parseArgentinePrice(piece.precio) * parseArgentineKilos(kilos),
-					imagen: piece.imagen // Asegúrate que piece tenga esta propiedad
-				};
+    if (piece) {
+      // Asegúrate que piece.imagen sea de tipo ImageKeys
+      const newItem: ItemVenta = {
+        id: Date.now().toString(),
+        nombre: piece.nombre,
+        precioUnitario: parseArgentinePrice(piece.precio),
+        kilos: parseArgentineKilos(kilos),
+        total: parseArgentinePrice(piece.precio) * parseArgentineKilos(kilos),
+        imagen: piece.imagen as ImageKeys // Conversión de tipo aquí
+      };
 
-				dispatch(agregarItemVenta(newItem));
-				setSelectedCategory('');
-				setSelectedPiece('');
-				setSelectedPieceData(null);
-				setKilos('');
-			}
+      dispatch(agregarItemVenta(newItem));
+      setSelectedCategory('');
+      setSelectedPiece('');
+      setSelectedPieceData(null);
+      setKilos('');
+    }
 
-			setIsLoading(false);
-		}, 500);
-	};
+    setIsLoading(false);
+  }, 500);
+};
 
 	const handleFinalizeSale = () => {
-		if (ventaActual.items.length === 0) {
-			alert('Por favor agrega al menos un item a la venta');
-			return;
-		}
-		dispatch(finalizarVenta());
-	};
+  if (ventaActual.items.length === 0) {
+    alert('Por favor agrega al menos un item a la venta');
+    return;
+  }
+  router.push('/preview'); // Asegúrate de tener esta ruta configurada
+};
 
 	const removeItem = (id: string) => {
 		dispatch(eliminarItemVenta(id));
@@ -131,14 +134,14 @@ const SalesForm = () => {
 						/>
 
 						{ventaActual.items.length > 0 && (
-							<>
-								<AddedItemsList
-									ventaActual={ventaActual}
-									removeItem={removeItem}
-								/>
-								<GrandTotalSummary ventaActual={ventaActual} />
-							</>
-						)}
+              <>
+                <AddedItemsList
+                  ventaActual={ventaActual}
+                  removeItem={removeItem}
+                />
+                <GrandTotalSummary ventaActual={ventaActual} />
+              </>
+            )}
 					</View>
 				</ScrollView>
 			</KeyboardAvoidingView>

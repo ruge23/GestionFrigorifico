@@ -5,4 +5,5 @@ export type RootStackParamList = {
   pieceManagement: undefined;
   profitability: undefined;
   sales: undefined;
+  preview: undefined;
 };

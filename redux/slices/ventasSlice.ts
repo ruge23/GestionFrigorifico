@@ -1,60 +1,54 @@
+// En tu ventasSlice.ts
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { ImageKeys } from '../../constants';
 
-interface ProductoVenta {
-	id: string;
-	nombre: string;
-	precioUnitario: number;
-	kilos: number;
-	total: number;
-	imagen: string; // Nueva propiedad para la imagen
+interface ItemVenta {
+  id: string;
+  nombre: string;
+  precioUnitario: number;
+  kilos: number;
+  total: number;
+  imagen: ImageKeys;
 }
 
 interface VentaState {
-	items: ProductoVenta[];
-	total: number;
-	ventaActual: {
-		items: ProductoVenta[];
-		total: number;
-	};
+  ventaActual: {
+    items: ItemVenta[];
+    total: number;
+    fecha: string;
+  };
 }
 
 const initialState: VentaState = {
-	items: [],
-	total: 0,
-	ventaActual: {
-		items: [],
-		total: 0
-	}
+  ventaActual: {
+    items: [],
+    total: 0, 
+    fecha: new Date().toISOString(),
+  },
 };
 
 const ventasSlice = createSlice({
-	name: 'ventas',
-	initialState,
-	reducers: {
-		agregarItemVenta: (state, action: PayloadAction<ProductoVenta>) => {
-			state.ventaActual.items.push(action.payload);
-			state.ventaActual.total = state.ventaActual.items.reduce((sum, item) => sum + item.total, 0);
-		},
-		eliminarItemVenta: (state, action: PayloadAction<string>) => {
-			state.ventaActual.items = state.ventaActual.items.filter(item => item.id !== action.payload);
-			state.ventaActual.total = state.ventaActual.items.reduce((sum, item) => sum + item.total, 0);
-		},
-		finalizarVenta: (state) => {
-			state.items = [...state.items, ...state.ventaActual.items];
-			state.total += state.ventaActual.total;
-			state.ventaActual = {
-				items: [],
-				total: 0
-			};
-		},
-		limpiarVentaActual: (state) => {
-			state.ventaActual = {
-				items: [],
-				total: 0
-			};
-		}
-	}
+  name: 'ventas',
+  initialState,
+  reducers: {
+    agregarItemVenta(state, action: PayloadAction<ItemVenta>) {
+      state.ventaActual.items.push(action.payload);
+      state.ventaActual.total = state.ventaActual.items.reduce((sum, item) => sum + item.total, 0);
+    },
+    eliminarItemVenta(state, action: PayloadAction<string>) {
+      state.ventaActual.items = state.ventaActual.items.filter(item => item.id !== action.payload);
+      state.ventaActual.total = state.ventaActual.items.reduce((sum, item) => sum + item.total, 0);
+    },
+    finalizarVenta(state) {
+      // Reiniciamos manteniendo la estructura correcta
+      state.ventaActual = { 
+        items: [], 
+        total: 0, 
+        fecha: new Date().toISOString() 
+      };
+    },
+  },
 });
 
-export const { agregarItemVenta, eliminarItemVenta, finalizarVenta, limpiarVentaActual } = ventasSlice.actions;
+export const { agregarItemVenta, eliminarItemVenta, finalizarVenta } = ventasSlice.actions;
 export default ventasSlice.reducer;
