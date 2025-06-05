@@ -1,11 +1,13 @@
 import { configureStore } from '@reduxjs/toolkit';
 import loginReducer from './slices/loginSlice';
 import ventasReducer from './slices/ventasSlice';
+import expensesReducer from './slices/expensesSlice';
 
 export const store = configureStore({
   reducer: {
     login: loginReducer,
-    ventas: ventasReducer
+    ventas: ventasReducer,
+    expenses: expensesReducer
   },
 });
 

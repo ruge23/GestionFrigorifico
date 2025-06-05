@@ -8,15 +8,16 @@ import {
   View,
   StatusBar,
 } from 'react-native';
-import { router } from 'expo-router';
+import { useRouter } from 'expo-router';
 import { CgMenu } from "react-icons/cg";
 import { FaUserCircle, FaCashRegister  } from "react-icons/fa";
 import { LuBeef } from "react-icons/lu";
-import { GiProgression } from "react-icons/gi";
+import { GiProgression, GiPayMoney  } from "react-icons/gi";
 // import { MaterialIcons, MaterialCommunityIcons } from '@expo/vector-icons';
 // import Icon from 'react-native-vector-icons/MaterialIcons'; // Importa íconos profesionales
 
 const HomeScreen = () => {
+  const router = useRouter();
   return (
     <SafeAreaView style={styles.safeArea}>
       {/* Status Bar + Header */}
@@ -51,13 +52,22 @@ const HomeScreen = () => {
         </View>
 
         {/* Fila inferior (50% height) */}
-        <TouchableOpacity 
-          style={styles.fullWidthItem}
-          onPress={() => router.push('/profitability')}
-        >
+        <View style={styles.topRow}>
+          <TouchableOpacity 
+            style={styles.gridItem}
+            onPress={() => router.push('/expenses')}
+          >
+            <GiPayMoney size={90} color="#cc0000" />
+            <Text style={styles.gridText}>Compras</Text>
+          </TouchableOpacity>
+          <TouchableOpacity 
+            style={styles.gridItem}
+            onPress={() => router.push('/profitability')}
+          >
           <GiProgression size={90} color="#cc0000" />
           <Text style={styles.gridText}>Balance</Text>
         </TouchableOpacity>
+        </View>
       </View>
     </SafeAreaView>
   );

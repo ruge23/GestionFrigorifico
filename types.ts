@@ -6,4 +6,5 @@ export type RootStackParamList = {
   profitability: undefined;
   sales: undefined;
   preview: undefined;
+  expenses: undefined;
 };
